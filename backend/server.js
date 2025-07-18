@@ -396,20 +396,35 @@ app.post("/send-otp", async (req, res) => {
   });
 
   const mailOptions = {
-    from: "noreply@example.com",
+    from: '"Innothon’25 Support Team" <innothon25@gmail.com>',
     to: email,
-    subject: "Your OTP Code",
-    text: `Your OTP is: ${otp}. It will expire in 5 minutes.`,
+    subject: "OTP for Innothon'25 Reset Password",
+    html: `
+      <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
+        <h2>Dear User,</h2>
+        <p>We received a request to reset the password for your <strong>Innothon’25</strong> website account.</p>
+        <p>Your One-Time Password (OTP) is:</p>
+        <div style="text-align: center; margin: 20px 0;">
+          <span style="font-size: 32px; font-weight: bold; color: #2d89ef;">${otp}</span>
+        </div>
+        <p><strong>Note:</strong> This OTP is valid for <strong>5 minutes only</strong>.</p>
+        <p>If you did <strong>not</strong> request a password reset, you can safely ignore this email. No changes will be made to your account.</p>
+        <br>
+        <p>Thank you for being a part of Innothon’25!</p>
+        <p style="margin-top: 30px;">– Innothon’25 Support Team</p>
+      </div>
+    `,
   };
 
   try {
     await transporter.sendMail(mailOptions);
-    res.send({ message: "OTP sent successfully" });
-  } catch (err) {
-    console.error("Error sending OTP:", err);
+    res.status(200).send({ message: "OTP sent successfully", otp }); // Optional: Don't send OTP in production
+  } catch (error) {
+    console.error("Error sending email:", error);
     res.status(500).send({ message: "Failed to send OTP" });
   }
 });
+
 
 app.post("/verify-otp", (req, res) => {
   const { email, otp } = req.body;
@@ -463,6 +478,33 @@ app.post("/reset-password", async (req, res) => {
   } catch (error) {
     console.error("❌ Reset password error:", error);
     res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+app.post("/submit-help", async (req, res) => {
+  const { firstName, lastName, email, phone, message } = req.body;
+
+  if (!firstName || !lastName || !email || !phone || !message) {
+    return res.status(400).json({ message: "All fields are required." });
+  }
+
+  try {
+    const db = client.db("Queries");
+    const collection = db.collection("user_queries");
+
+    await collection.insertOne({
+      firstName,
+      lastName,
+      email,
+      phone,
+      message,
+      submittedAt: new Date(),
+    });
+
+    res.status(200).json({ message: "Help query submitted successfully!" });
+  } catch (err) {
+    console.error("Error submitting query:", err);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 });
 
