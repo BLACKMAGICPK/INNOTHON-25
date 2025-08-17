@@ -598,7 +598,7 @@ function AboutUs() {
           .alternate-row {
             justify-content: center;
             align-items: center;
-            gap: 20px;
+            gap: 15px;
           }
 
           .alt-img-box {
