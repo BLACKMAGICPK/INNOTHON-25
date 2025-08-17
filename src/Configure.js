@@ -1,5 +1,5 @@
 
-const BASE_URL = 'http://192.168.1.3:5000'; // Replace with your actual IP and port
+const BASE_URL = 'https://innothon-25.onrender.com'; // Replace with your actual IP and port
 
 
 export default BASE_URL;
