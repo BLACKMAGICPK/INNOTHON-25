@@ -2,6 +2,11 @@ import React from "react";
 import { useState, useEffect } from "react";
 import Header from "../Components/Header";
 import glitchLogo from "../images/INNOTHON-25-glitch.png";
+import { FaInstagram, FaLinkedin } from "react-icons/fa";
+import { FaArrowRight } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import BASE_URL from "../Configure";
+
 
 // Import icons
 import { FaLightbulb, FaCheckCircle, FaLeaf, FaClipboardList, FaBrain, FaTasks, FaProjectDiagram } from "react-icons/fa";
@@ -28,7 +33,7 @@ import kcgLogo from "../images/kcg-logo.jpeg";
 import cseLogo from "../images/cse-logo.jpg";
 
 function Home() {
-
+  const navigate = useNavigate();
   const winnerImages = [winner1, winner2, winner3, winner4, winner5, winner6, winner7, winner8, winner9, winner10, winner11, winner12, winner13, winner14, winner15];
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -43,6 +48,19 @@ function Home() {
 
       const [typedInno25, setTypedInno25] = useState('');
       const [charIndex25, setCharIndex25] = useState(0);
+
+      const [loading, setLoading] = useState(false);
+
+
+
+      const [helpForm, setHelpForm] = useState({
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        message: "",
+      });
+
 
       useEffect(() => {
         if (charIndex < innotext.length) {
@@ -111,10 +129,50 @@ function Home() {
     { name: "Business Model", icon: <FaProjectDiagram /> },
   ];
 
+    const handleInputChange = (e) => {
+    setHelpForm({ ...helpForm, [e.target.name]: e.target.value });
+  };
+
+  const handleHelpSubmit = async (e) => {
+      e.preventDefault();
+      setLoading(true);
+
+      const { firstName, lastName, email, phone, message } = helpForm;
+
+      if (!firstName || !lastName || !email || !phone || !message) {
+        return alert("Please fill all fields.");
+      }
+
+      try {
+        const res = await fetch(`${BASE_URL}/submit-help`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(helpForm),
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+           setLoading(false); 
+          alert("Query submitted successfully!");
+          setHelpForm({ firstName: "", lastName: "", email: "", phone: "", message: "" });
+        } else {
+          alert(data.message);
+        }
+      } catch (err) {
+        console.error(err);
+        alert("Something went wrong!");
+      }finally {
+    setLoading(false); // Always stop spinner
+  }
+    };
+
   return (
     <>
       <div className="home-container">
-        <Header />
+        <Header />  
         <main className="home-content">
           <h2 className="tagline">&lt; A National Level Tech Hackathon /&gt;</h2>
           <img src={glitchLogo} alt="INNOTHON'25 Glitch Logo" className="glitch-logo" />
@@ -137,6 +195,14 @@ function Home() {
               {typedInno25}
               <span className="cursor" />
             </p>
+
+            {/* Register Button */}
+            <div className="register-btn-container">
+              <button className="register-btn" onClick={() => navigate("/domains")}>
+                Click to Register <FaArrowRight className="register-icon" />
+                
+                </button>
+            </div>
 
           </section>
 
@@ -161,31 +227,31 @@ function Home() {
             <div className="timeline-icon" />
             <div className="timeline-content">
               <h4 className="timeline-title">Registration Starts</h4>
-              <p className="timeline-date">7th July 2025</p>
-              <p>Registration starts And Problem statement Release.</p>
+              <p className="timeline-date">20th Aug 2025</p>
+              <p>Registration starts And Theme Release.</p>
             </div>
           </div>
           <div className="timeline-item">
             <div className="timeline-icon" />
             <div className="timeline-content">
               <h4 className="timeline-title">Registration Ends</h4>
-              <p className="timeline-date">5th Aug 2025</p>
-              <p>Registeration Closes </p>
+              <p className="timeline-date">20th Sept 2025</p>
+              <p>Registeration Closes. </p>
             </div>
           </div>
           <div className="timeline-item">
             <div className="timeline-icon" />
             <div className="timeline-content">
-              <h4 className="timeline-title">Prelims</h4>
-              <p className="timeline-date">8th - 9th Aug 2025</p>
-              <p>Idea submission and PPT Presentation <br />Mode: Online.</p>
+              <h4 className="timeline-title">PPT Submission</h4>
+              <p className="timeline-date">25th Aug 2025 Onwards</p>
+              <p>PPT Template Release. <br />PPT Submission for Finals evaluation.</p>
             </div>
           </div>
           <div className="timeline-item">
             <div className="timeline-icon timeline-icon-final" />
             <div className="timeline-content">
               <h4 className="timeline-title">Grand Finale</h4>
-              <p className="timeline-date">22th - 23st Aug 2025</p>
+              <p className="timeline-date">26th - 27th Sept 2025</p>
               <p>PPT Presentation and Business Model.<br />Prototype 100%.<br />Mode: Offline.</p>
             </div>
           </div>
@@ -216,17 +282,17 @@ function Home() {
       <section>    
           <div className="footer-container">
             <div className="footer-section">
-              <h3>Note</h3>
+              <h3 className="section-title">Note</h3>
               <ul>
-                <li><FaRupeeSign className="note-icon" /><div>Enrollment Fee Rs.200/- per Participant<br />Rs.700/- per person for the finalists</div></li>
-                <li><FaUsers className="note-icon" /><div>Team must consist of maximum 3 members only</div></li>
+                <li><FaRupeeSign className="note-icon" /><div>Enrollment Fee <span style={{color:"#ff9c00"}}> Rs.100/- </span> per Participant for Prefinals and <span style={{color:"#ff9c00"}}> Rs.300/- </span> per Participant for Finals</div></li>
+                <li><FaUsers className="note-icon" /><div>Team must consist of maximum 4 members only <span style={{color:"#ff9c00"}}> (1-4)</span> </div></li>
                 <li><FaClock className="note-icon" /><div>30 hour hackathon</div></li>
                 <li><FaClipboard className="note-icon" /><div>Participants are expected to develop a prototype for the chosen problem statement.</div></li>
               </ul>
             </div>
             
             <div className="footer-section">
-              <h3>Contact Us</h3>
+              <h3 className="section-title">Contact Us</h3>
               <ul>
                 <li><FaPhoneAlt className="note-icon" /><div>Jyotsna T - President, INNOCOM<br /><a href="tel:9962292154">9962292154</a></div></li>
                 <li><FaPhoneAlt className="note-icon" /><div>Subashri M - Secretary, INNOCOM<br /><a href="tel:8754458587">8754458587</a></div></li>
@@ -236,7 +302,7 @@ function Home() {
             </div>
             
             <div className="footer-section powered-section">
-              <h3>Powered by</h3>
+              <h3 className="section-title">Powered by</h3>
               <div className="powered-logos">
                 <div className="powered-item">
                   <img src={kcgLogo} alt="KCG College of Technology" />
@@ -254,29 +320,76 @@ function Home() {
         <h3 className="section-title">Need Help?</h3>
         <p className="help-desc">For any issues or questions, feel free to reach out to us using the form below.</p>
         <div className="help-form-container">
-          <form className="help-form">
+          <form className="help-form" onSubmit={handleHelpSubmit}>
             <div className="form-row">
-              <input type="text" placeholder="First Name" required />
-              <input type="text" placeholder="Last Name" required />
+              <input
+                type="text"
+                name="firstName"
+                placeholder="First Name"
+                value={helpForm.firstName}
+                onChange={handleInputChange}
+                required
+              />
+              <input
+                type="text"
+                name="lastName"
+                placeholder="Last Name"
+                value={helpForm.lastName}
+                onChange={handleInputChange}
+                required
+              />
             </div>
             <div className="form-row">
-              <input type="email" placeholder="Email ID" required />
-              <input type="tel" placeholder="Phone Number" required />
+              <input
+                type="email"
+                name="email"
+                placeholder="Email ID"
+                value={helpForm.email}
+                onChange={handleInputChange}
+                required
+              />
+              <input
+                type="tel"
+                name="phone"
+                placeholder="Phone Number"
+                value={helpForm.phone}
+                onChange={handleInputChange}
+                required
+              />
             </div>
             <div className="form-row full-width">
-              <textarea placeholder="Describe your issue or question..." rows="4" required></textarea>
+              <textarea
+                name="message"
+                placeholder="Describe your issue or question..."
+                rows="4"
+                value={helpForm.message}
+                onChange={handleInputChange}
+                required
+              />
             </div>
-            <button type="submit" className="submit-btn">Submit</button>
+            <button type="submit" disabled={loading} className="submit-btn">
+              {loading && <span className="spinner" />} {loading ? "Submitting..." : "Submit"}
+            </button>
+
           </form>
+
         </div>
       </section>
 
 
       <section>
 
-        <div className="footer-bottom">
-          © Developed by Team - LogicLoopers
-        </div>
+
+          <div className="footer-bottom" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
+            <span>© Developed by Team - LogicLoopers</span>
+            <a href="https://www.instagram.com/logicloopersofficial/" target="_blank" rel="noopener noreferrer">
+              <FaInstagram style={{ color: '#ccc', fontSize: '1.5rem' }} />
+            </a>
+            <a href="https://www.linkedin.com/company/logic-loopers/" target="_blank" rel="noopener noreferrer">
+              <FaLinkedin style={{ color: '#ccc', fontSize: '1.5rem' }} />
+            </a>
+          </div>
+
 
       </section>
       </main>
@@ -308,7 +421,9 @@ function Home() {
         }
 
         .tagline {
-          
+          background: linear-gradient(to right, #007BFF, #04fdbfff); /* Gradient color */
+          -webkit-background-clip: text; /* Clip the background to the text */
+          -webkit-text-fill-color: transparent; /* Make the text color transparent */
           overflow: hidden;
          
           display: inline-block;
@@ -337,7 +452,10 @@ function Home() {
           font-size: 35px;
           font-weight: bold;
           margin-bottom: 10px;
-          color: #9dffff;
+          background: linear-gradient(to right, #007BFF, #04fdbfff); /* Gradient color */
+        -webkit-background-clip: text; /* Clip the background to the text */
+        -webkit-text-fill-color: transparent; /* Make the text color transparent */
+        margin-top: 10px;
           margin-top: 10px;
         }
 
@@ -349,6 +467,38 @@ function Home() {
           line-height: 1.6;
           font-weight: 700;
         }
+
+        .register-btn-container {
+          display: flex;
+          justify-content: center;
+         margin-bottom: 30px;
+        }
+
+        .register-btn {
+          padding: 14px 28px;
+          background: linear-gradient(to right, #007BFF, #04fdbfff);
+          border: none;
+          border-radius: 8px;
+          color: #f5f5f5;
+          font-weight: bold;
+          font-size: 18px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          gap: 10px; /* space between text and icon */
+          transition: transform 0.2s ease, background-color 0.3s ease;
+          font-family: 'Courier New', monospace;
+        }
+
+        .register-btn:hover {
+          background-color: #28baba;
+          transform: scale(1.05);
+        }
+
+        .register-icon {
+          font-size: 20px; /* make it bigger */
+        }
+
 
 
         .eval-criteria {
@@ -583,9 +733,9 @@ function Home() {
         }
         .footer-bottom {
           text-align: center;
-          font-size: 14px;
+          font-size: 16px;
           font-weight: 700;
-          margin-top: 20px;
+          margin-top: 30px;
           color: #aaa;
         }
 
@@ -697,15 +847,16 @@ function Home() {
 
         .submit-btn {
           padding: 12px;
-          background-color: #31cece;
+          background: linear-gradient(to right, #007BFF, #04fdbfff);
           border: none;
           border-radius: 8px;
-          color: #000;
+          color: #fff;
           font-weight: bold;
-          font-size: 15px;
+          font-size: 18px;
           cursor: pointer;
           transition: background-color 0.3s ease;
           margin-bottom: 20px;
+          font-family: 'Courier New', monospace;
         }
 
         .submit-btn:hover {
@@ -728,6 +879,24 @@ function Home() {
             width: 100%;
           }
        }
+
+       .spinner {
+        width: 16px;
+        height: 16px;
+        border: 2px solid #fff;
+        border-top: 2px solid transparent;
+        border-radius: 50%;
+        animation: spin 0.6s linear infinite;
+        display: inline-block;
+        margin-right: 8px;
+        vertical-align: middle;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
 
           
 
@@ -808,6 +977,14 @@ function Home() {
             .form-row {
           flex-direction: column;
         }
+          .footer-bottom {
+            font-size: 14px;
+            
+            }
+            .register-btn{
+            font-size: 16px;
+            padding: 12px 24px;
+          }
         }
       `}</style>
     </>

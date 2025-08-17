@@ -123,23 +123,29 @@ async function startServer() {
 
 
     
-    // 🔧 Generate Unique User ID
-    async function generateUserId(problemId) {
-        const db = client.db("Registered_User");
-        const collection = db.collection("user_details");
-        
-        const prefix = `US/${problemId}/25`;
-        const users = await collection.find({ userId: { $regex: `^${prefix}` } }).toArray();
-        
-        const numbers = users
-        .map((u) => parseInt(u.userId?.split("/")?.[2]?.slice(2))) // extract '001', '002' etc
-    .filter((num) => !isNaN(num));
+   // 🔧 Generate Unique User ID
+  async function generateUserId() {
+      const db = client.db("Registered_User");
+      const collection = db.collection("user_details");
+      
+      const prefix = `IN/US/25`; // Base prefix
+      const users = await collection.find({ userId: { $regex: `^${prefix}` } }).toArray();
 
-    let maxNumber = numbers.length ? Math.max(...numbers) : 0;
-    const nextNumber = String(maxNumber + 1).padStart(3, "0");
-    
-    return `${prefix}${nextNumber}`;
-}
+      // Extract numeric suffix (last 3 digits)
+      const numbers = users
+          .map((u) => {
+              const id = u.userId || "";
+              const suffix = id.replace(prefix, ""); // take out prefix
+              return parseInt(suffix, 10);
+          })
+          .filter((num) => !isNaN(num));
+
+      // Find max and generate next
+      let maxNumber = numbers.length ? Math.max(...numbers) : 0;
+      const nextNumber = String(maxNumber + 1).padStart(3, "0");
+
+      return `${prefix}${nextNumber}`;
+  }
 
 app.post("/register", async (req, res) => {
   try {
@@ -156,9 +162,10 @@ app.post("/register", async (req, res) => {
       state,
       college,
       department,
-      ps_id,
       teamCount,
       paymentScreenshot,
+      projectDomain,
+      foodAllergy,
       member1Name,
       member1Phone,
       member1Email,
@@ -166,9 +173,31 @@ app.post("/register", async (req, res) => {
       member2Name,
       member2Phone,
       member2Email,
-      member2Dept
+      member2Dept,
+      member3Name,
+      member3Phone,
+      member3Email,
+      member3Dept,
     } = data;
 
+    // 🚨 Mandatory fields check
+    if (
+      !leadName ||
+      !leadPhone ||
+      !leadEmail ||
+      !password ||
+      !confirmPassword ||
+      !gender ||
+      !state ||
+      !college ||
+      !department ||
+      !teamCount ||
+      !paymentScreenshot
+    ) {
+      return res.status(400).json({ message: "All required fields must be filled" });
+    }
+
+    // ✅ Validate password match
     if (password !== confirmPassword) {
       return res.status(400).json({ message: "Passwords do not match" });
     }
@@ -176,14 +205,16 @@ app.post("/register", async (req, res) => {
     const db = client.db("Registered_User");
     const collection = db.collection("user_details");
 
-    // 🔍 Check for duplicate lead email
+    // ✅ Check duplicate email
     const existing = await collection.findOne({ "lead.email": leadEmail });
     if (existing) {
       return res.status(409).json({ message: "This email is already registered" });
     }
 
-    const userId = await generateUserId(ps_id);
+    // ✅ Generate unique user ID
+    const userId = await generateUserId();
 
+    // ✅ Collect team members dynamically
     const teamMembers = [];
     if (teamCount >= 2) {
       teamMembers.push({
@@ -201,7 +232,16 @@ app.post("/register", async (req, res) => {
         department: member2Dept,
       });
     }
+    if (teamCount >= 4) {
+      teamMembers.push({
+        name: member3Name,
+        phone: member3Phone,
+        email: member3Email,
+        department: member3Dept,
+      });
+    }
 
+    // ✅ Final document to save
     const entry = {
       userId,
       teamName,
@@ -213,11 +253,12 @@ app.post("/register", async (req, res) => {
         department,
         gender,
       },
-      password, // Consider hashing
+      password, // ⚠️ Ideally hash this before saving
       state,
-      ps_id,
+      projectDomain,
       teamCount,
       teamMembers,
+      foodAllergy: foodAllergy || "",
       paymentScreenshot,
       createdAt: new Date(),
     };
@@ -230,6 +271,7 @@ app.post("/register", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
+
 
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;

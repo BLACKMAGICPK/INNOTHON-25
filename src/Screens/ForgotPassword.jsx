@@ -9,10 +9,13 @@ function ForgotPassword() {
   const [otp, setOtp] = useState("");
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
 
   const handleSendOtp = async () => {
     if (!email) return alert("Please enter your email");
 
+      setLoading(true);
     try {
       // Check if user exists
       const checkRes = await fetch(`${BASE_URL}/checkuser`, {
@@ -24,7 +27,10 @@ function ForgotPassword() {
       });
 
       const checkData = await checkRes.json();
-      if (!checkRes.ok || !checkData.exists) return alert("Email not registered");
+        if (!checkRes.ok || !checkData.exists) {
+      setLoading(false);
+      return alert("Email not registered");
+    }
 
       // Send OTP
       const res = await fetch(`${BASE_URL}/send-otp`, {
@@ -36,19 +42,23 @@ function ForgotPassword() {
       });
 
       const data = await res.json();
-      if (!res.ok) return alert(data.message);
-
+      if (!res.ok) {
+      setLoading(false);
+      return alert(data.message);
+    }
       setOtpSent(true);
       setMessage("✅ OTP sent to your email successfully.");
     } catch (err) {
       console.error("OTP sending error", err);
       alert("Something went wrong. Try again.");
-    }
+    }finally {
+    setLoading(false);
+  }
   };
 
   const handleVerifyOtp = async () => {
     if (!otp) return alert("Please enter the OTP");
-
+    setLoading(true);
     try {
       const res = await fetch(`${BASE_URL}/verify-otp`, {
         method: "POST",
@@ -59,13 +69,18 @@ function ForgotPassword() {
       });
 
       const data = await res.json();
-      if (!res.ok) return alert(data.message || "Invalid OTP");
+      if (!res.ok)  {
+        setLoading(false); 
+        return alert(data.message || "Invalid OTP");
+      };
 
       // ✅ OTP verified, go to reset password page
       navigate("/reset-password", { state: { email } });
     } catch (err) {
       console.error("OTP verification failed", err);
       alert("Something went wrong. Try again.");
+    } finally {
+      setLoading(false); 
     }
   };
 
@@ -86,7 +101,7 @@ function ForgotPassword() {
               disabled={otpSent}
               required
             />
-            <button onClick={handleSendOtp} disabled={otpSent}>Send OTP</button>
+            <button onClick={handleSendOtp} disabled={otpSent}>{loading && <span className="spinner" />} {loading ? "Sending OTP..." : "Send OTP"}</button>
 
             {message && <p className="success-text">{message}</p>}
 
@@ -99,7 +114,7 @@ function ForgotPassword() {
                   onChange={(e) => setOtp(e.target.value)}
                   required
                 />
-                <button onClick={handleVerifyOtp}>Verify OTP</button>
+                <button onClick={handleVerifyOtp}>{loading && <span className="spinner" />} {loading ? "Verifying OTP..." : "Verify OTP"}</button>
               </>
             )}
           </div>
@@ -107,6 +122,9 @@ function ForgotPassword() {
       </div>
 
       <style>{`
+      body {
+          overscroll-behavior: none;
+        }
         .forgot-container {
           background: linear-gradient(to bottom, #000, #1a273a);
           color: white;
@@ -123,7 +141,9 @@ function ForgotPassword() {
         .form-title {
           text-align: center;
           font-size: 28px;
-          color: #9dffff;
+          background: linear-gradient(to right, #007BFF, #04fdbfff); /* Gradient color */
+        -webkit-background-clip: text; /* Clip the background to the text */
+        -webkit-text-fill-color: transparent; /* Make the text color transparent */
           margin-bottom: 10px;
         }
 
@@ -150,14 +170,15 @@ function ForgotPassword() {
 
         button {
           padding: 12px;
-          font-size: 16px;
+          font-size: 18px;
           font-weight: bold;
-          background: rgb(141, 154, 255);
+           background: linear-gradient(to right, #007BFF, #04fdbfff);
           color: white;
           border: none;
           border-radius: 8px;
           cursor: pointer;
           transition: 0.3s ease;
+          font-family: 'Courier New', monospace;
         }
 
         button:hover {
@@ -169,6 +190,23 @@ function ForgotPassword() {
           font-weight: bold;
           text-align: center;
         }
+          .spinner {
+        width: 16px;
+        height: 16px;
+        border: 2px solid #fff;
+        border-top: 2px solid transparent;
+        border-radius: 50%;
+        animation: spin 0.6s linear infinite;
+        display: inline-block;
+        margin-right: 8px;
+        vertical-align: middle;
+        }
+
+        @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+        }
+
 
         @media (max-width: 768px) {
           .form-group {

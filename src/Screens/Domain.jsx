@@ -1,6 +1,8 @@
 import React from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { FaInstagram, FaLinkedin } from 'react-icons/fa';
+
 
 import Header from "../Components/Header";
 
@@ -30,94 +32,66 @@ function Domains() {
             };
             }, []);
 
-            const handleDomainClick = (path) => {
-            if (path) {
-              navigate(path);
-            } else {
-              alert("Page not available for this domain yet!");
-            }
-          };
+            
 
 
 
   const domains = [
   {
-    name: "Web Development",
+    name: "Sustainable Digital Transformation – Smart City & Urban Innovation",
     icon: <FaCode />,
-    desc: "Build dynamic and scalable websites and platforms using modern technologies and frameworks.",
-    path: "/wd-ps"
-  },
-  {
-    name: "App Development",
-    icon: <FaMobileAlt />,
-    desc: "Develop robust and user-friendly mobile applications for Android, iOS, or cross-platform devices.",
-    path: "/app-ps"
-  },
-  {
-    name: "Cybersecurity",
-    icon: <FaLock />,
-    desc: "Delve into the world of Cyber Security challenges and create secure digital solutions.",
-    path: "/cs-ps"
-  },
-  {
-    name: "AR/VR",
-    icon: <FaVrCardboard />,
-    desc: "Augmented Reality and Virtual Reality problem statements for immersive experiences.",
-    path: "/arvr-ps"
-  },
-  {
-    name: "AI/ML",
-    icon: <FaBrain />,
-    desc: "Explore intelligent systems and models in Artificial Intelligence and Machine Learning.",
-    path: "/aiml-ps"
-  },
-  {
-    name: "Cloud Computing",
-    icon: <FaCloud />,
-    desc: "Leverage cloud platforms and services to build efficient, distributed applications.",
-    path: "/cc-ps"
-  },
-  {
-    name: "Open Statement",
-    icon: <FaQuestionCircle />,
-    desc: "Tackle open-ended challenges with creative and innovative tech-based solutions.",
+    desc: "Build tech-driven solutions for greener, smarter cities with smart mobility, clean energy, governance, and citizen engagement.",
     
+  },
+  {
+    name: "Infrastructure for Tomorrow – Virtual Twin & Sustainable Infrastructure",
+    icon: <FaMobileAlt />,
+    desc: "Combine virtual twin tech with sustainability to design, monitor, and optimize smart transport and resilient infrastructure.",
+    
+  },
+  {
+    name: "Edge Computing & Real-Time Analytics",
+    icon: <FaCloud />,
+    desc: "Use edge computing for instant decisions in manufacturing, predictive maintenance, and sensor-driven smart systems.",
+   
+  },
+  {
+    name: "Next-Gen Defense Technology",
+    icon: <FaShieldAlt />,
+    desc: "Enhance defense with AI/ML, blockchain, cloud, and digital twins for smarter, faster, and secure operations.",
+    
+  },
+  {
+    name: "Open Innovation",
+    icon: <FaQuestionCircle />,
+    desc: "Collaborate across domains to co-create scalable, impactful solutions for real-world challenges.",
   },
 ];
 
 
   const awards = [
-    {
-      name: "Overall Title Winner",
-      icon: <FaTrophy />,
-      desc: "Awarded to the team with the most outstanding performance across all categories.",
-    },
-    {
-      name: "Domain-Wise Title Winner",
-      icon: <FaShieldAlt />,
-      desc: "Recognizes the best team in each specific domain such as AI/ML, Cybersecurity, AR/VR, etc.",
-    },
-    {
-      name: "Best UI/UX",
-      icon: <FaAward />,
-      desc: "Awarded to the team with the most user-friendly and aesthetically pleasing interface design.",
-    },
-    {
-      name: "Best Clean Code",
-      icon: <FaTools />,
-      desc: "Honors the team with the best coding practices, maintainable, and well-documented code.",
-    },
-    {
-      name: "Special Jury Prizes",
-      icon: <FaCertificate />,
-      desc: "Each jury member can recommend a special prize to the team they find the most innovative or impactful.",
-    },
-    {
-      name: "More Exciting Gifts and Goodies",
-      icon: <FaGift />,
-      desc: "Get ready for more fun, learning opportunities, and exciting goodies for participants!",
-    },
-  ];
+  {
+    name: "Overall Title Winner",
+    icon: <FaTrophy />,
+    desc: "Awarded to the team with the most outstanding performance across all domains.",
+  },
+  {
+    name: "2nd Prize Winner",
+    icon: <FaAward />,
+    desc: "Awarded to the team securing the second overall position.",
+  },
+  {
+    name: "3rd Prize Winner",
+    icon: <FaAward />,
+    desc: "Awarded to the team securing the third overall position.",
+  },
+  {
+    name: "Domain-Wise Title Winner",
+    icon: <FaShieldAlt />,
+    desc: "One winning team will be chosen from each project domain.",
+  },
+];
+
 
   return (
     <>
@@ -135,8 +109,7 @@ function Domains() {
                   className="info-card"
                   key={index}
                   style={{ '--i': index }}
-                  onClick={() => handleDomainClick(domain.path)}
-                  role="button"
+                  
                 >
                   <div className="icon">{domain.icon}</div>
                   <span className="title">{domain.name}</span>
@@ -144,6 +117,15 @@ function Domains() {
                 </div>
               ))}
             </div>
+
+            {/* Register Button */}
+                        <div className="register-btn-container">
+                          <button className="register-btn" onClick={() => navigate("/register")}>
+                            Register Now
+                            
+                            </button>
+                        </div>
+
           </section>
 
           {/* Awards Section */}
@@ -157,6 +139,17 @@ function Domains() {
                   <p className="desc">&lt; {award.desc} /&gt;</p>
                 </div>
               ))}
+            </div>
+          </section>
+          <section>
+            <div className="footer-bottom" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
+                <span>© Developed by Team - LogicLoopers</span>
+                <a href="https://www.instagram.com/logicloopersofficial/" target="_blank" rel="noopener noreferrer">
+                  <FaInstagram style={{ color: '#ccc', fontSize: '1.5rem' }} />
+                </a>
+                <a href="https://www.linkedin.com/company/logic-loopers/" target="_blank" rel="noopener noreferrer">
+                  <FaLinkedin style={{ color: '#ccc', fontSize: '1.5rem' }} />
+                </a>
             </div>
           </section>
         </main>
@@ -183,7 +176,9 @@ function Domains() {
 
         .tagline {
           font-size: 20px;
-          color: #fff;
+          background: linear-gradient(to right, #007BFF, #04fdbfff); /* Gradient color */
+          -webkit-background-clip: text; /* Clip the background to the text */
+          -webkit-text-fill-color: transparent; /* Make the text color transparent */
           margin-bottom: 40px;
           
         }
@@ -193,6 +188,9 @@ function Domains() {
           font-weight: bold;
           margin-bottom: 30px;
           color: #9dffff;
+          background: linear-gradient(to right, #007BFF, #04fdbfff); /* Gradient color */
+        -webkit-background-clip: text; /* Clip the background to the text */
+        -webkit-text-fill-color: transparent; /* Make the text color transparent */
         }
 
         .card-grid {
@@ -270,6 +268,40 @@ function Domains() {
                 opacity: 1;
                 transform: translateX(0) translateY(0);
                 }
+          .footer-bottom {
+          text-align: center;
+          font-size: 16px;
+          font-weight: 700;
+          margin-top: 30px;
+          color: #aaa;
+        }
+          .register-btn-container {
+          display: flex;
+          justify-content: center;
+         margin-bottom: 30px;
+         margin-top: 20px;
+        }
+
+        .register-btn {
+          padding: 14px 28px;
+          background: linear-gradient(to right, #007BFF, #04fdbfff);
+          border: none;
+          border-radius: 8px;
+          color: #f5f5f5;
+          font-weight: bold;
+          font-size: 18px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          gap: 10px; /* space between text and icon */
+          transition: transform 0.2s ease, background-color 0.3s ease;
+          font-family: 'Courier New', monospace;
+        }
+
+        .register-btn:hover {
+          background-color: #28baba;
+          transform: scale(1.05);
+        }
 
 
 
@@ -316,13 +348,21 @@ function Domains() {
             }
 
             .title {
-                font-size: 16px;
+                font-size: 14px;
                 
             }
 
             .desc {
                 font-size: 13px;
             }
+                .footer-bottom {
+            font-size: 14px;
+            
+            }
+            .register-btn{
+            font-size: 16px;
+            padding: 12px 24px;
+          }
             }
 
 

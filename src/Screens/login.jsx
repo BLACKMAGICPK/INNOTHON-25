@@ -9,9 +9,13 @@ function Login() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+
     try {
       const response = await fetch(`${BASE_URL}/login`, {
         method: "POST",
@@ -22,7 +26,11 @@ function Login() {
       });
 
       const data = await response.json();
-      if (!response.ok) return alert(data.message);
+       if (!response.ok) {
+      alert(data.message);
+      setLoading(false);
+      return;
+    }
 
       navigate("/profile", { state: { userId: data.userId } });
     } catch (err) {
@@ -54,7 +62,9 @@ function Login() {
               </span>
             </div>
 
-            <button type="submit">Login</button>
+            <button type="submit" disabled={loading}>
+            {loading && <span className="spinner" />} {loading ? "Logging in..." : "Login"}
+          </button>
           </form>
 
           <p className="register-link">
@@ -71,6 +81,9 @@ function Login() {
    
 
       <style>{`
+      body {
+          overscroll-behavior: none;
+        }
         .login-container {
           background: linear-gradient(to bottom, #000, #1a273a);
           color: white;
@@ -87,7 +100,9 @@ function Login() {
         .form-title {
           text-align: center;
           font-size: 28px;
-          color: #9dffff;
+          background: linear-gradient(to right, #007BFF, #04fdbfff); /* Gradient color */
+        -webkit-background-clip: text; /* Clip the background to the text */
+        -webkit-text-fill-color: transparent; /* Make the text color transparent */
           margin-bottom: 30px;
         }
 
@@ -131,15 +146,16 @@ function Login() {
 
         .login-form button {
           padding: 12px;
-          font-size: 16px;
+          font-size: 18px;
           font-weight: bold;
-          background: rgb(141, 154, 255);;
+           background: linear-gradient(to right, #007BFF, #04fdbfff);
           color: black;
           border: none;
           border-radius: 8px;
           cursor: pointer;
           transition: 0.3s ease;
           color: #fff;
+          font-family: 'Courier New', monospace;
         }
 
         .login-form button:hover {
@@ -161,6 +177,23 @@ function Login() {
 
         .register-link span:hover {
           color: #25a3a3;
+        }
+
+        .spinner {
+        width: 16px;
+        height: 16px;
+        border: 2px solid #fff;
+        border-top: 2px solid transparent;
+        border-radius: 50%;
+        animation: spin 0.6s linear infinite;
+        display: inline-block;
+        margin-right: 8px;
+        vertical-align: middle;
+        }
+
+        @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
         }
 
         @media (max-width: 768px) {

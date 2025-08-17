@@ -29,10 +29,7 @@ import SivakumarImg from "../images/quango/Sivakumar.jpg";
 
 
 function AboutUs() {
-  const aboutText = `< The Innocom Club of the CSE Department, KCG Tech is a student-driven community that fosters inclusivity, peer growth, and technical excellence. It empowers students through hands-on programs in AIML, Cybersecurity, and emerging tech domains, while actively guiding them in project development and innovation. Flagship events like Innothon ‘23 and Innothon ‘24 showcased impactful student solutions through intense prelims and mentorship. Challenges like Web Quest further spark research and critical thinking. Innocom creates a vibrant space for collaboration, creativity, and continuous learning, helping students turn ideas into action. />`;
-
-  const [typedAbout, setTypedAbout] = useState("");
-  const [aboutIndex, setAboutIndex] = useState(0);
+ 
 
   useEffect(() => {
     const elements = document.querySelectorAll(".scroll-fade");
@@ -52,15 +49,7 @@ function AboutUs() {
     return () => observer.disconnect();
   }, []);
 
-  useEffect(() => {
-    if (aboutIndex < aboutText.length) {
-      const timeout = setTimeout(() => {
-        setTypedAbout((prev) => prev + aboutText[aboutIndex]);
-        setAboutIndex((prev) => prev + 1);
-      }, 5);
-      return () => clearTimeout(timeout);
-    }
-  }, [aboutIndex]);
+  
 
  const coreMembers = [
   { id: "jyotsna", name: "Jyotsna T", role: "President", image: jyotsnaImg, color: "#31cece" },
@@ -101,8 +90,8 @@ function AboutUs() {
             <section className="section fade-in">
                 <h3 className="section-title">About Us</h3>
                 <p className="section-text typewriter">
-                    {typedAbout}
-                    <span className="cursor" />
+                    The Innocom Club of the CSE Department, KCG Tech is a student-driven community that fosters inclusivity, peer growth, and technical excellence. It empowers students through hands-on programs in AIML, Cybersecurity, and emerging tech domains, while actively guiding them in project development and innovation. Flagship events like Innothon ‘23 and Innothon ‘24 showcased impactful student solutions through intense prelims and mentorship. Challenges like Web Quest further spark research and critical thinking. Innocom creates a vibrant space for collaboration, creativity, and continuous learning, helping students turn ideas into action. 
+
                 </p>
             </section>
 
@@ -244,7 +233,7 @@ function AboutUs() {
           min-height: 100vh;
           background: linear-gradient(to bottom, #000, #0c172d);
           color: white;
-          font-family: 'Courier New', monospace;
+          font-family: "poppins", sans-serif;
         }
 
         .aboutus-content {
@@ -270,8 +259,9 @@ function AboutUs() {
         text-align: center;
         }
         .section-text{
-          font-size: 14px;
-          font-weight: 700;}
+          font-size: 16px;
+          text-align: center;
+          }
         
 
         @keyframes fadeInUp {
@@ -395,9 +385,9 @@ function AboutUs() {
 
         .typewriter {
         white-space: pre-wrap;
-        text-align: justify;
+        text-align: center;
         line-height: 1.6;
-        font-family: 'Courier New', monospace;
+        font-family: "poppins", sans-serif;
         min-height: 140px;
         overflow: hidden;
         }
@@ -625,12 +615,7 @@ function AboutUs() {
         
         flex-direction: column;
         
-      }
-        .footer-bottom {
-            font-size: 14px;
-            
-            }
-            }
+        }
       `}</style>
     </>
   );

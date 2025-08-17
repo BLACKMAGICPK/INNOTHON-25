@@ -15,6 +15,14 @@ const statesOfIndia = [
   "Jammu and Kashmir", "Ladakh", "Lakshadweep", "Puducherry"
 ];
 
+const projectDomains = [
+    "Sustainable Digital Transformation – Smart City & Urban Innovation",
+    "Infrastructure for Tomorrow – Virtual Twin & Sustainable Infrastructure",
+    "Edge Computing & Real-Time Analytics",
+    "Next-Gen Defense Technology",
+    "Open Innovation",
+  ];
+
 function Register() {
   const [teamCount, setTeamCount] = useState(1);
   const [paymentFile, setPaymentFile] = useState(null);
@@ -81,8 +89,8 @@ function Register() {
     const result = await response.json();
 
     if (!response.ok) {
-      alert(result.message || "Registration failed");
       setLoading(false);
+      alert(result.message || "Registration failed");
       return;
     }
 
@@ -91,6 +99,8 @@ function Register() {
   } catch (error) {
     console.error("Error registering:", error);
     alert("Something went wrong. Try again.");
+  } finally{
+     setLoading(false); 
   }
 };
 
@@ -139,8 +149,14 @@ function Register() {
               ))}
             </select>
 
-            <label>Problem Statement ID:</label>
-            <input type="text" value={psIdFromNav} readOnly required />
+            <label>Project Domain:</label>
+            <select name="projectDomain" onChange={handleChange} required>
+              <option value="">Select Project Domain</option>
+              {projectDomains.map((domain, i) => (
+                <option key={i} value={domain}>{domain}</option>
+              ))}
+            </select>
+
 
             <label>College:</label>
             <input type="text" name="college" onChange={handleChange} required />
@@ -148,11 +164,12 @@ function Register() {
             <label>Department:</label>
             <input type="text" name="department" onChange={handleChange} required />
 
-            <label>Team Count (max 3 including lead):</label>
+            <label>Team Count (max 4 including lead):</label>
             <select value={teamCount} onChange={(e) => setTeamCount(parseInt(e.target.value))}>
               <option value={1}>1 (Solo)</option>
               <option value={2}>2</option>
               <option value={3}>3</option>
+              <option value={4}>4</option>
             </select>
 
             {teamCount > 1 && (
@@ -182,8 +199,32 @@ function Register() {
                 <input type="text" name="member2Dept" onChange={handleChange} required />
               </>
             )}
+            {teamCount > 3 && (
+              <>
+                <h4>Member 3 Details:</h4>
+                <label>Member 3 Name:</label>
+                <input type="text" name="member3Name" onChange={handleChange} required />
+                <label>Member 3 Phone No:</label>
+                <input type="tel" name="member3Phone" onChange={handleChange} required />
+                <label>Member 3 Email ID:</label>
+                <input type="email" name="member3Email" onChange={handleChange} required />
+                <label>Department:</label>
+                <input type="text" name="member3Dept" onChange={handleChange} required />
+              </>
+            )}
 
-            <h4>UPI Payment</h4>
+             {/* Food Allergy Field */}
+            <label>Any food allergy for you or your teammates (describe here):</label>
+            <textarea
+              name="foodAllergy"
+              onChange={handleChange}
+              rows="3"
+              placeholder="e.g., Peanut allergy, Lactose intolerance, etc."
+              style={{ resize: "vertical" }}
+            />
+
+            <h4>UPI Payment:</h4>
+            <p className="payment-note">Note: ₹100 per head for prefinals. Before making the payment, please ensure that you are correct. This payment is Only for Prefinals </p>
             <img src={qrImage} alt="UPI QR Code" className="qr-code" />
             <label>Upload Payment Screenshot:</label>
             <input type="file" accept="image/*" onChange={handleImageChange} required />
@@ -215,7 +256,9 @@ function Register() {
         .form-title {
         text-align: center;
         font-size: 28px;
-        color: #9dffff;
+        background: linear-gradient(to right, #007BFF, #04fdbfff); /* Gradient color */
+        -webkit-background-clip: text; /* Clip the background to the text */
+        -webkit-text-fill-color: transparent; /* Make the text color transparent */
         }
           
         .header-bar {
@@ -266,20 +309,39 @@ function Register() {
 
         .register-form button {
           padding: 12px;
-          font-size: 16px;
+          font-size: 18px;
           font-weight: bold;
-          background: rgb(141, 154, 255);
+          background: linear-gradient(to right, #007BFF, #04fdbfff);
           color: black;
           border: none;
           border-radius: 8px;
           cursor: pointer;
           transition: 0.3s ease;
-          color: #fff;
+          color: white;
+          font-family: 'Courier New', monospace;
         }
 
         .register-form button:hover {
           background: rgb(98, 116, 255);
         }
+          .register-form textarea {
+          padding: 10px;
+          font-size: 14px;
+          border-radius: 5px;
+          border: 1px solid white;
+          background-color: #ffffff0a;
+          color: white;
+        }
+        .register-form textarea::placeholder {
+          color: #ccc;
+        }
+         .payment-note {
+            font-size: 16px;
+           
+            text-align: center; /* Center the text */
+            margin-bottom: 10px; /* Space below the note */
+          } 
+
 
         .qr-code {
           width: 400px;

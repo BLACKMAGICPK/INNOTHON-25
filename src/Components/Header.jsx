@@ -1,41 +1,84 @@
-import React from "react";
-import logo from "../images/Innocom-logo.jpg"; // Adjust the path as necessary
-import profilePic from "../images/modern-avatar.jpg";
+import React, { useState } from "react";
+import { useLocation } from "react-router-dom";  // detect current page
+import { FiLogIn, FiLogOut } from "react-icons/fi"; // door/arrow icons
+import innocomLogo from "../images/innocom.jpg";
+import kcgLogo from "../images/kcg-logo-new.jpg";
+import cseLogo from "../images/cse-logo.jpg";
+import ietLogo from "../images/IET.png";
 
 function Header() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation();
+
+  const isProfilePage = location.pathname === "/profile"; // check if profile page
+
   return (
     <>
-      {/* Google Fonts import */}
-      <link
-        href="https://fonts.googleapis.com/css2?family=Sen:wght@400;700&display=swap"
-        rel="stylesheet"
-      />
-
       <header className="header">
         <div className="logo-section">
-          <img src={logo} alt="Logo" className="logo" />
-          <span className="brand-name">INNOTHON'25</span>
+          <img src={kcgLogo} alt="KCG Logo" className="logo" />
+          <img src={cseLogo} alt="CSE Logo" className="logo" />
+          <img src={innocomLogo} alt="Innocom Logo" className="logo" />
+          <img src={ietLogo} alt="IET Logo" className="logo" />
         </div>
+
+        {/* Desktop Navigation */}
         <nav className="nav-links">
           <a href="/">Home</a>
           <a href="/domains">Domains</a>
           <a href="/about-us">About</a>
-          <a href="/login">
-            <img src={profilePic} alt="Profile" className="profile-icon" />
-          </a>
+
+          {/* Conditional Login/Logout with icons */}
+          {isProfilePage ? (
+            <a href="/login" className="login-btn">
+              Logout
+              <FiLogOut size={20} style={{ marginLeft: "6px" }} />
+            </a>
+          ) : (
+            <a href="/login" className="login-btn">
+              Login
+              <FiLogIn size={20} style={{ marginLeft: "6px" }} />
+            </a>
+          )}
         </nav>
+
+        {/* Hamburger Menu (Mobile Only) */}
+        <div className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)}>
+          {menuOpen ? "✕" : "☰"}
+        </div>
+
+        {/* Popup Menu */}
+        {menuOpen && (
+          <div className="popup-menu">
+            <a href="/" onClick={() => setMenuOpen(false)}>Home</a>
+            <a href="/domains" onClick={() => setMenuOpen(false)}>Domains</a>
+            <a href="/about-us" onClick={() => setMenuOpen(false)}>About</a>
+
+            {isProfilePage ? (
+              <a href="/login" className="login-btn mobile-login" onClick={() => setMenuOpen(false)}>
+                Logout
+                <FiLogOut size={18} style={{ marginLeft: "6px" }} />
+              </a>
+            ) : (
+              <a href="/login" className="login-btn mobile-login" onClick={() => setMenuOpen(false)}>
+                Login
+                <FiLogIn size={18} style={{ marginLeft: "6px" }} />
+              </a>
+            )}
+          </div>
+        )}
       </header>
 
       <style>{`
         .header {
           background-color: black;
           color: white;
-          padding: 10px 16px;
+          padding: 20px 20px;
           display: flex;
           align-items: center;
           justify-content: space-between;
-          font-family: 'Sen', sans-serif;
-          flex-wrap: nowrap;
+          font-family: 'Courier New', monospace;
+          position: relative;
         }
 
         .logo-section {
@@ -44,94 +87,146 @@ function Header() {
         }
 
         .logo {
-          height: 40px;
+          height: 60px;
+          width: auto;
           margin-right: 8px;
-          border-radius: 50%; /* Rounded corners for the logo */
-        }
-
-        .brand-name {
-          font-size: 24px;
-          font-weight: 700;
-          color: white;
-          font-family: 'Sen', sans-serif; /* keep branding bold and clean */
+          border-radius: 5px;
+          object-fit: cover;
         }
 
         .nav-links {
           display: flex;
           align-items: center;
-          flex-wrap: nowrap;
-          font-family: 'Courier New', Courier, monospace; /* Coding font */
+          font-family: 'Courier New', monospace;
+          background: linear-gradient(to right, #007BFF, #04fdbfff);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
         }
 
         .nav-links a {
           color: white;
           text-decoration: none;
           margin-left: 16px;
-          font-weight: 400;
-          font-size: 18px;
+          font-weight: 600;
+          font-size: 26px;
           transition: color 0.3s ease;
+          display: flex;
+          align-items: center;
         }
 
         .nav-links a:hover {
           color: #ffcc00;
         }
 
-        .profile-icon {
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-          object-fit: cover;
-          border: 1px solid #fff;
+        /* Login/Logout button */
+        .login-btn {
+          background: linear-gradient(to right, #007BFF, #04fdbfff);
+          color: white !important;
+          -webkit-text-fill-color: white !important;
+          padding: 8px 18px;
+          border-radius: 25px;
+          font-size: 18px !important;
+          font-weight: bold;
+          transition: background 0.3s ease;
+          text-decoration: none;
+          margin-left: 20px;
+          display: flex;
+          align-items: center;
+        }
+        .login-btn:hover {
+          background: #0056b3;
+          color: #fff !important;
         }
 
-        /* Tablet adjustments (≤768px) */
+        .menu-toggle {
+          display: none;
+          font-size: 20px;
+          cursor: pointer;
+          background-color: #222;
+          padding: 6px 12px;
+          border-radius: 6px;
+          transition: background 0.3s ease, transform 0.3s ease;
+          user-select: none;
+          font-weight: bold;
+        }
+        .menu-toggle:hover {
+          background-color: #333;
+        }
+        .menu-toggle:active {
+          transform: scale(0.95);
+        }
+
+        .popup-menu {
+          position: absolute;
+          top: 70px;
+          right: 16px;
+          background: #1a1a1a;
+          border: 1px solid #333;
+          padding: 16px 20px;
+          border-radius: 12px;
+          display: flex;
+          flex-direction: column;
+          z-index: 999;
+          box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+          animation: fadeIn 0.3s ease-in-out;
+          min-width: 160px;
+        }
+
+        .popup-menu a {
+          color: #fff;
+          text-decoration: none;
+          padding: 10px 12px;
+          font-size: 17px;
+          font-weight: 600;
+          border-radius: 8px;
+          transition: background 0.2s ease, color 0.2s ease;
+          display: flex;
+          align-items: center;
+        }
+        .popup-menu a:hover {
+          background: #333;
+          color: #00ffff;
+        }
+
+        /* Mobile-specific login button */
+        .mobile-login {
+          margin-top: 10px;
+          text-align: center;
+        }
+
         @media (max-width: 768px) {
-          .logo {
-            height: 30px;
+          .nav-links {
+            display: none;
           }
 
-          .brand-name {
+          .menu-toggle {
+            display: block;
+            color: white;
+          }
+
+          .logo {
+            height: 38px;
+          }
+
+          .header {
+            padding: 12px;
+          }
+            .login-btn {
             font-size: 18px;
+            margin-left: 0;
+            padding: 8px 16px;
+            justify-content: center;
           }
 
-          .nav-links a {
-            margin-left: 10px;
-            font-size: 14px;
-          }
-
-          .profile-icon {
-            width: 26px;
-            height: 26px;
-          }
-
-          .header {
-            padding: 8px 12px;
-          }
-        }
-
-        /* Mobile adjustments (≤480px) */
-        @media (max-width: 480px) {
-          .logo {
-            height: 30px;
-          }
-
-          .brand-name {
-            font-size: 16px;
-          }
-
-          .nav-links a {
-            margin-left: 5px;
-            font-size: 15px;
-            font-weight: 700;
-          }
-
-          .profile-icon {
-            width: 28px;
-            height: 28px;
-          }
-
-          .header {
-            padding: 10px 10px;
+          @keyframes fadeIn {
+            0% {
+              opacity: 0;
+              transform: translateY(-5px);
+            }
+            100% {
+              opacity: 1;
+              transform: translateY(0);
+            }
           }
         }
       `}</style>
