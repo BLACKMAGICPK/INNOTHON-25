@@ -73,9 +73,11 @@ function ResetPassword() {
               </span>
             </div>
 
-            <button type="submit" disabled={loading}>
-            {loading && <span className="spinner" />} {loading ? "Updating Password..." : "Update Password"}
+            <button type="button" onClick={handleReset} disabled={loading}>
+              {loading && <span className="spinner" />} 
+              {loading ? "Updating Password..." : "Update Password"}
             </button>
+
           </div>
         </div>
       </div>

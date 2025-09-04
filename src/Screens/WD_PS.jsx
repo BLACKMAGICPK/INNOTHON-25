@@ -45,15 +45,27 @@ function ProblemStatement() {
               <h3 className="title">{ps.ps_title}</h3>
 
               <div className="text-section">
-                <p>
-                  <strong style={{ fontSize: "15px", color: "white" }}>Objective:</strong>{" "}
-                  {ps.objective}
-                </p>
-                <p>
-                  <strong style={{ fontSize: "15px", color: "white" }}>Background:</strong>{" "}
-                  {ps.background}
-                </p>
-              </div>
+              <p>
+                <strong style={{ fontSize: "15px", color: "white" }}>Objective:</strong>{" "}
+                {ps.objective}
+              </p>
+              <p>
+                <strong style={{ fontSize: "15px", color: "white" }}>Background:</strong>{" "}
+                {ps.background}
+              </p>
+              {ps.expectedOutput && ps.expectedOutput.length > 0 && (
+                <div>
+                  <strong style={{ fontSize: "15px", color: "white" }}>Expected Output:</strong>
+                  <ul style={{ marginTop: "8px", paddingLeft: "20px" }}>
+                    {ps.expectedOutput.map((item, idx) => (
+                      <li key={idx} style={{ marginBottom: "6px", color: "#ccc" }}>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
 
               <div className="top-row">
                 <div className="industry-box">
@@ -66,13 +78,12 @@ function ProblemStatement() {
                 </div>
               </div>
 
-              <button
+               <button
                 className="register-button"
-                onClick={() => navigate("/register", { state: { ps_id: ps.ps_id } })}
+                onClick={() => navigate("/register", { state: { ps_id: ps.ps_id , ps_title: ps.ps_title} })}
               >
                 Register
               </button>
-
             </div>
           ))}
         </main>
@@ -118,7 +129,9 @@ function ProblemStatement() {
   .section-heading {
     font-size: 30px;
     font-weight: bold;
-    color: #9dffff;
+     background: linear-gradient(to right, #007BFF, #04fdbfff); /* Gradient color */
+          -webkit-background-clip: text; /* Clip the background to the text */
+          -webkit-text-fill-color: transparent; /* Make the text color transparent */
     flex-grow: 1;
     text-align: center;
   }
@@ -154,7 +167,7 @@ function ProblemStatement() {
   }
 
   .text-section {
-    font-family: 'Courier Prime', monospace;
+    font-family: 'Courier New', monospace;
     line-height: 1.5;
     margin-bottom: 20px;
     font-size : 14px;
@@ -178,9 +191,9 @@ function ProblemStatement() {
   .industry-logo {
     width: 60px;
     height: 60px;
-    border-radius: 50%;
+    border-radius: 10%;
     object-fit: cover;
-    border: 2px solid #fff;
+    
   }
 
   .industry-text {
@@ -194,7 +207,7 @@ function ProblemStatement() {
   }
 
   .sdg-icons img {
-    width: 50px;
+    width: 60px;
     border-radius: 4px;
   }
 
@@ -203,7 +216,7 @@ function ProblemStatement() {
     display: block;
     padding: 12px 32px;
     font-size: 16px;
-    background:rgb(141, 154, 255);         /* updated button color */
+    background: linear-gradient(to right, #007BFF, #04fdbfff);       /* updated button color */
     color: #fff;
     font-weight: bold;
     border: none;

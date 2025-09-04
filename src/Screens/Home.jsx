@@ -218,6 +218,19 @@ function Home() {
               ))}
             </div>
           </section>
+          
+          <section className="section">
+            <div className="footer-section">
+              <h3 className="section-title" style={{textAlign: "center"}}>Note</h3>
+              <ul>
+                <li><FaRupeeSign className="note-icon" /><div>Enrollment Fee <span style={{color:"#ff9c00"}}> Rs.100/- </span> per Participant for initial Registeration and <span style={{color:"#ff9c00"}}> Rs.350/- </span> per Participant for Finals.</div></li>
+                <li><FaUsers className="note-icon" /><div>Team must consist of maximum 4 members only <span style={{color:"#ff9c00"}}> (1-4)</span> </div></li>
+                <li><FaClipboard className="note-icon" /><div>The pre-finals of this event will be conducted in the form of submitted PPTs and video screenings, after which the shortlisted students for the finals will be announced.</div></li>
+                <li><FaClock className="note-icon" /><div>30 hour hackathon.</div></li>
+                <li><FaClipboard className="note-icon" /><div>Participants are expected to develop a prototype for the chosen problem statement.</div></li>
+              </ul>
+            </div>
+          </section>
 
       {/* Timeline Section */}
       <section className="section timeline-section">
@@ -227,7 +240,7 @@ function Home() {
             <div className="timeline-icon" />
             <div className="timeline-content">
               <h4 className="timeline-title">Registration Starts</h4>
-              <p className="timeline-date">20th Aug 2025</p>
+              <p className="timeline-date">3rd Sept 2025</p>
               <p>Registration starts And Theme Release.</p>
             </div>
           </div>
@@ -242,16 +255,25 @@ function Home() {
           <div className="timeline-item">
             <div className="timeline-icon" />
             <div className="timeline-content">
-              <h4 className="timeline-title">PPT Submission</h4>
-              <p className="timeline-date">25th Aug 2025 Onwards</p>
-              <p>PPT Template Release. <br />PPT Submission for Finals evaluation.</p>
+              <h4 className="timeline-title">PPT Template Release</h4>
+              <p className="timeline-date">8th Sept 2025 Onwards</p>
+              <p>PPT Template Release. <br />PPT Submission and 3-mins Vedio of proposed solution Submission starts.</p>
             </div>
           </div>
+          <div className="timeline-item">
+            <div className="timeline-icon" />
+            <div className="timeline-content">
+              <h4 className="timeline-title">Finalist Announcement</h4>
+              <p className="timeline-date">23rd Sept 2025</p>
+              <p>The finalists of the event will be announced.</p>
+            </div>
+          </div>
+
           <div className="timeline-item">
             <div className="timeline-icon timeline-icon-final" />
             <div className="timeline-content">
               <h4 className="timeline-title">Grand Finale</h4>
-              <p className="timeline-date">26th - 27th Sept 2025</p>
+              <p className="timeline-date">30th Sept - 1th Oct 2025</p>
               <p>PPT Presentation and Business Model.<br />Prototype 100%.<br />Mode: Offline.</p>
             </div>
           </div>
@@ -281,15 +303,7 @@ function Home() {
 
       <section>    
           <div className="footer-container">
-            <div className="footer-section">
-              <h3 className="section-title">Note</h3>
-              <ul>
-                <li><FaRupeeSign className="note-icon" /><div>Enrollment Fee <span style={{color:"#ff9c00"}}> Rs.100/- </span> per Participant for Prefinals and <span style={{color:"#ff9c00"}}> Rs.300/- </span> per Participant for Finals</div></li>
-                <li><FaUsers className="note-icon" /><div>Team must consist of maximum 4 members only <span style={{color:"#ff9c00"}}> (1-4)</span> </div></li>
-                <li><FaClock className="note-icon" /><div>30 hour hackathon</div></li>
-                <li><FaClipboard className="note-icon" /><div>Participants are expected to develop a prototype for the chosen problem statement.</div></li>
-              </ul>
-            </div>
+           
             
             <div className="footer-section">
               <h3 className="section-title">Contact Us</h3>
@@ -500,13 +514,13 @@ function Home() {
         }
 
 
-
         .eval-criteria {
           display: flex;
           flex-wrap: wrap;
           justify-content: center;
           gap: 16px;
           margin-top: 20px;
+          margin-bottom: 40px;
         }
 
         .criteria-item {
@@ -690,7 +704,7 @@ function Home() {
         }
 
         .footer-section h3 {
-          font-size: 24px;
+          
           color: #ffffff;
           margin-bottom: 16px;
           text-align: left;

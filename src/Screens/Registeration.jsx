@@ -29,7 +29,10 @@ function Register() {
   const [loading, setLoading] = useState(false);
 
   const location = useLocation();
+  
   const psIdFromNav = location.state?.ps_id || "";
+  const psTitleFromNav = location.state?.ps_title || "";
+
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({});
@@ -71,12 +74,14 @@ function Register() {
       imageUrl = cloudinaryData.secure_url;
     }
 
-    const finalData = {
+        const finalData = {
       ...formData,
       ps_id: psIdFromNav,
+      ps_title: psTitleFromNav,  // add this line
       teamCount,
       paymentScreenshot: imageUrl,
     };
+
 
     const response = await fetch(`${BASE_URL}/register`, {
       method: "POST",
@@ -149,13 +154,24 @@ function Register() {
               ))}
             </select>
 
-            <label>Project Domain:</label>
-            <select name="projectDomain" onChange={handleChange} required>
-              <option value="">Select Project Domain</option>
-              {projectDomains.map((domain, i) => (
-                <option key={i} value={domain}>{domain}</option>
-              ))}
-            </select>
+            <label>Problem Statement ID:</label>
+              <input
+                type="text"
+                name="ps_id"
+                value={psIdFromNav}
+                readOnly
+                style={{ backgroundColor: "#333", color: "white" }}
+              />
+
+              <label>Problem Statement Title:</label>
+              <input
+                type="text"
+                name="ps_title"
+                value={psTitleFromNav}
+                readOnly
+                style={{ backgroundColor: "#333", color: "white" }}
+              />
+
 
 
             <label>College:</label>
@@ -224,7 +240,7 @@ function Register() {
             />
 
             <h4>UPI Payment:</h4>
-            <p className="payment-note">Note: ₹100 per head for prefinals. Before making the payment, please ensure that you are correct. This payment is Only for Prefinals </p>
+            <p className="payment-note">Note: ₹100 per head for Initial Registeration. Before making the payment, please ensure that you are correct. This payment is Only for Prefinals </p>
             <img src={qrImage} alt="UPI QR Code" className="qr-code" />
             <label>Upload Payment Screenshot:</label>
             <input type="file" accept="image/*" onChange={handleImageChange} required />

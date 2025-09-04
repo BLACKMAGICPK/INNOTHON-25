@@ -81,7 +81,7 @@ async function startServer() {
 
     app.post("/get_CS_PS", async (req, res) => {
     const database = client.db("Problem_Statements");
-    const collection = database.collection("PS_AIML");
+    const collection = database.collection("PS_CS");
 
     try {
         const data = await collection.find().toArray(); // Fetch all PS
@@ -109,7 +109,7 @@ async function startServer() {
 
     app.post("/get_ARVR_PS", async (req, res) => {
     const database = client.db("Problem_Statements");
-    const collection = database.collection("PS_AIML");
+    const collection = database.collection("PS_ARVR");
 
     try {
         const data = await collection.find().toArray(); // Fetch all PS
@@ -146,7 +146,6 @@ async function startServer() {
 
       return `${prefix}${nextNumber}`;
   }
-
 app.post("/register", async (req, res) => {
   try {
     const data = req.body;
@@ -164,7 +163,6 @@ app.post("/register", async (req, res) => {
       department,
       teamCount,
       paymentScreenshot,
-      projectDomain,
       foodAllergy,
       member1Name,
       member1Phone,
@@ -178,6 +176,8 @@ app.post("/register", async (req, res) => {
       member3Phone,
       member3Email,
       member3Dept,
+      ps_id,       // ✅ new
+      ps_title,    // ✅ new
     } = data;
 
     // 🚨 Mandatory fields check
@@ -192,7 +192,9 @@ app.post("/register", async (req, res) => {
       !college ||
       !department ||
       !teamCount ||
-      !paymentScreenshot
+      !paymentScreenshot ||
+      !ps_id ||       // ✅ ensure ps_id is mandatory
+      !ps_title       // ✅ ensure ps_title is mandatory
     ) {
       return res.status(400).json({ message: "All required fields must be filled" });
     }
@@ -244,6 +246,8 @@ app.post("/register", async (req, res) => {
     // ✅ Final document to save
     const entry = {
       userId,
+      ps_id,       // ✅ saved
+      ps_title,    // ✅ saved
       teamName,
       lead: {
         name: leadName,
@@ -253,9 +257,8 @@ app.post("/register", async (req, res) => {
         department,
         gender,
       },
-      password, // ⚠️ Ideally hash this before saving
+      password, // ⚠️ hash this in production
       state,
-      projectDomain,
       teamCount,
       teamMembers,
       foodAllergy: foodAllergy || "",
@@ -271,6 +274,7 @@ app.post("/register", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
+
 
 
 app.post("/login", async (req, res) => {
@@ -351,24 +355,45 @@ const domainModels = {
 
 
 app.post("/getProblemStatementById", async (req, res) => {
-  const { ps_id } = req.body;
+  let { ps_id } = req.body;
+  console.log("🔍 Received ps_id:", ps_id);
 
   try {
     if (!ps_id || typeof ps_id !== "string") {
       return res.status(400).json({ error: "Invalid ps_id format" });
     }
 
+    // Normalize ps_id
+    ps_id = ps_id.replace(/[_–—]/g, "-").toUpperCase();
+
     const parts = ps_id.split("-");
     if (parts.length !== 2) {
       return res.status(400).json({ error: "Invalid ps_id format" });
     }
 
-    const domainCode = parts[1].substring(0, 2).toUpperCase(); // WD, CC, etc.
-    const collectionName = `PS_${domainCode}`;
+    const domainCode = parts[1].substring(0, 2).toUpperCase();
+
+    // Map domain codes to collection names
+    const domainCollectionMap = {
+      WD: "PS_WD",
+      CC: "PS_CC",
+      CS: "PS_CS",
+      OS: "PS_OS",
+      APP: "PS_APP",
+      AI: "PS_AIML",
+      AR: "PS_ARVR",
+      VR: "PS_ARVR",
+    };
+
+    const collectionName = domainCollectionMap[domainCode];
+
+    if (!collectionName) {
+      return res.status(400).json({ error: "Invalid domain code" });
+    }
+
     console.log("🔍 ps_id:", ps_id);
     console.log("📂 Collection:", collectionName);
 
-    // ✅ Use your dedicated mongoosePS connection
     const ProblemStatement = mongoosePS.model(
       collectionName,
       new mongoose.Schema({}, { strict: false }),
@@ -387,7 +412,6 @@ app.post("/getProblemStatementById", async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
-
 
 app.post("/checkuser", async (req, res) => {
   const { email } = req.body;

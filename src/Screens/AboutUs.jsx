@@ -20,7 +20,7 @@ import HafsahImg from "../images/quango/Hafsah_Niaz.jpg";
 import HariniImg from "../images/quango/Harini.jpg";
 import JayavarshanImg from "../images/quango/jayavarshan.jpg";
 import KeerthanaaImg from "../images/quango/Keerthanaa.jpg";
-import LokeshImg from "../images/quango/Lokesh.jpg";
+import LokeshImg from "../images/quango/lokesh1.jpg";
 import SushmitaaImg from "../images/quango/Sushmithaa.jpg";
 import VishwanathImg from "../images/quango/Vishwanath.jpg";
 import SivaSuryaImg from "../images/quango/Sivasuriya.jpg";

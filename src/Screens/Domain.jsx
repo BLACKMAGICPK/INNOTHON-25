@@ -36,37 +36,34 @@ function Domains() {
 
 
 
-  const domains = [
+ const domains = [
   {
-    name: "Sustainable Digital Transformation – Smart City & Urban Innovation",
-    icon: <FaCode />,
-    desc: "Build tech-driven solutions for greener, smarter cities with smart mobility, clean energy, governance, and citizen engagement.",
-    
+    name: "Artificial Intelligence & Machine Learning (AI/ML)",
+    icon: <FaBrain />,
+    desc: "Develop intelligent systems using AI, deep learning, NLP, and computer vision.",
+    path: "/aiml-ps",
   },
   {
-    name: "Infrastructure for Tomorrow – Virtual Twin & Sustainable Infrastructure",
+    name: "Cybersecurity & Blockchain",
+    icon: <FaLock />,
+    desc: "Build secure solutions with encryption, blockchain, and cyber defense.",
+    path: "/cs-ps",
+  },
+  {
+    name: "Augmented Reality & Virtual Reality (AR/VR)",
+    icon: <FaVrCardboard />,
+    desc: "Design immersive AR/VR experiences for gaming, education, and healthcare.",
+    path: "/arvr-ps",
+  },
+  {
+    name: "Web & App Development with Cloud",
     icon: <FaMobileAlt />,
-    desc: "Combine virtual twin tech with sustainability to design, monitor, and optimize smart transport and resilient infrastructure.",
-    
-  },
-  {
-    name: "Edge Computing & Real-Time Analytics",
-    icon: <FaCloud />,
-    desc: "Use edge computing for instant decisions in manufacturing, predictive maintenance, and sensor-driven smart systems.",
-   
-  },
-  {
-    name: "Next-Gen Defense Technology",
-    icon: <FaShieldAlt />,
-    desc: "Enhance defense with AI/ML, blockchain, cloud, and digital twins for smarter, faster, and secure operations.",
-    
-  },
-  {
-    name: "Open Innovation",
-    icon: <FaQuestionCircle />,
-    desc: "Collaborate across domains to co-create scalable, impactful solutions for real-world challenges.",
+    desc: "Create responsive web and mobile apps with cloud integration.",
+    path: "/wd-ps",
   },
 ];
+
+
 
 
   const awards = [
@@ -109,7 +106,7 @@ function Domains() {
                   className="info-card"
                   key={index}
                   style={{ '--i': index }}
-                  
+                  onClick={() => navigate(domain.path)}
                 >
                   <div className="icon">{domain.icon}</div>
                   <span className="title">{domain.name}</span>
@@ -118,13 +115,7 @@ function Domains() {
               ))}
             </div>
 
-            {/* Register Button */}
-                        <div className="register-btn-container">
-                          <button className="register-btn" onClick={() => navigate("/register")}>
-                            Register Now
-                            
-                            </button>
-                        </div>
+          
 
           </section>
 

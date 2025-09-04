@@ -75,11 +75,12 @@ function Profile() {
             <div className="profile-card">
               <div className="card-header">
                 <div></div>
+                 <div className="ps-id-tag">{userData.ps_id}</div>
                 <div className="user-id-tag">{userData.userId}</div>
               </div>
 
               <h2 className="team-name">{userData.teamName}</h2>
-              <h2 className="Project-domain">{userData.projectDomain}</h2>
+              <h2 className="Project-domain">{userData.ps_title}</h2>
 
               <hr />
               <h4>Team Lead</h4>
@@ -108,6 +109,56 @@ function Profile() {
                   ))}
                 </>
               )}
+
+          {/* ✅ Problem Statement Section */}
+          {problemStatement && (
+  <>
+    <hr />
+    <h4>Problem Statement</h4>
+    <div className="problem-card">
+      <div className="code-box">{problemStatement.ps_id}</div>
+
+      <h3 className="title">{problemStatement.ps_title}</h3>
+
+      <div className="text-section">
+        <p>
+          <strong style={{ fontSize: "14px", color: "white" }}>Objective:</strong>{" "}
+          {problemStatement.objective}
+        </p>
+        <p>
+          <strong style={{ fontSize: "14px", color: "white" }}>Background:</strong>{" "}
+          {problemStatement.background}
+        </p>
+
+        {problemStatement.expectedOutput && problemStatement.expectedOutput.length > 0 && (
+          <div style={{ marginTop: "10px" }}>
+            <strong style={{ fontSize: "14px", color: "white" }}>Expected Output:</strong>
+            <ul style={{ marginTop: "8px", paddingLeft: "20px" }}>
+              {problemStatement.expectedOutput.map((item, idx) => (
+                <li key={idx} style={{ marginBottom: "6px", color: "#ccc" }}>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+
+      <div className="top-row">
+        <div className="industry-box">
+          <img src={problemStatement.industry_logo} alt="Industry Logo" className="industry-logo" />
+          <p className="industry-text">{problemStatement.industry_name}</p>
+        </div>
+        <div className="sdg-icons">
+          <img src={problemStatement.sdg1} alt="SDG Goal 1" />
+          <img src={problemStatement.sdg2} alt="SDG Goal 2" />
+        </div>
+      </div>
+    </div>
+  </>
+)}
+
+            
 
               
                 
@@ -187,6 +238,18 @@ function Profile() {
           font-size: 14px;
           font-weight: bold;
         }
+          .ps-id-tag {
+            border: 1px solid #fff;
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            align-items: left;
+            justify-content: left;
+            position: absolute;
+          }
+
 
         .team-name {
           text-align: center;
@@ -248,6 +311,26 @@ function Profile() {
           flex: 1;
           min-width: 300px;
         }
+          .problem-card {
+            background-color: #ffffff0a;
+            border: 2px solid #ffffff33;
+            border-radius: 20px;
+            padding: 24px;
+            position: relative;
+          }
+
+            .code-box {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #ffffff0a;       /* updated background */
+            color: white;                /* changed text color to white */
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+            border: 1px solid white;     /* added border */
+          }
 
         .flex-wrapper {
     display: flex;
@@ -291,7 +374,13 @@ function Profile() {
             margin-bottom: 20px;
             font-size: 14px;
             color: #ccc;
-            }
+            flex: 1;
+            min-width: 0; /* ✅ Allow shrinking */
+            word-wrap: break-word; /* ✅ Break long words */
+            overflow-wrap: break-word; /* ✅ Alternative property */
+            white-space: normal; /* ✅ Ensure wrapping */
+          }
+
 
             .top-row {
             display: flex;
@@ -310,9 +399,9 @@ function Profile() {
             .industry-logo {
             width: 60px;
             height: 60px;
-            border-radius: 50%;
+            border-radius: 10%;
             object-fit: cover;
-            border: 2px solid #fff;
+            
             }
 
             .industry-text {
@@ -325,7 +414,7 @@ function Profile() {
             }
 
             .sdg-icons img {
-            width: 50px;
+            width: 60px;
             border-radius: 4px;
             }
 
@@ -339,6 +428,12 @@ function Profile() {
           .form-title {
             font-size: 24px;
           }
+            .title{
+            font-size: 16px;}
+
+            .text-section {
+            font-size: 12px;
+            }
 
           .payment-img {
             max-width: 100%;

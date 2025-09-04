@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";  // detect current page
 import { FiLogIn, FiLogOut } from "react-icons/fi"; // door/arrow icons
 import innocomLogo from "../images/innocom.jpg";
 import kcgLogo from "../images/kcg-logo-new.jpg";
-import cseLogo from "../images/cse-logo.jpg";
+import cseLogo from "../images/cse-logo_2.jpg";
 import ietLogo from "../images/IET.png";
 
 function Header() {
@@ -205,7 +205,8 @@ function Header() {
           }
 
           .logo {
-            height: 38px;
+            height: 35px;
+            margin-right: 5px;
           }
 
           .header {
