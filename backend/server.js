@@ -575,6 +575,27 @@ app.post("/submit-help", async (req, res) => {
 });
 
 
+// Get all registered users
+app.get("/registrations", async (req, res) => {
+  try {
+    const database = client.db("Registered_User");
+    const collection = database.collection("user_details");
+
+    // Fetch all users
+    const users = await collection.find({}).toArray();
+
+    res.status(200).json({
+      message: "Registrations fetched successfully",
+      data: users,
+    });
+  } catch (error) {
+    console.error("❌ Error fetching registrations:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+
+
 
 
 // Start server only after DB connection
