@@ -7,12 +7,13 @@ import BASE_URL from '../Configure';
 function ProblemStatement() {
   const navigate = useNavigate();
   const [psData, setPsData] = useState([]);
+  const [loading, setLoading] = useState(true); // ✅ loading state
 
   const handleBack = () => {
     navigate(-1);
   };
 
-   useEffect(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
@@ -24,8 +25,14 @@ function ProblemStatement() {
       },
     })
       .then((res) => res.json())
-      .then((data) => setPsData(data)) // Expecting an array now
-      .catch((err) => console.error("Error fetching problem statements:", err));
+      .then((data) => {
+        setPsData(data);
+        setLoading(false); // ✅ stop loading
+      })
+      .catch((err) => {
+        console.error("Error fetching problem statements:", err);
+        setLoading(false); // ✅ stop loading even if error
+      });
   }, []);
 
   return (
@@ -38,54 +45,61 @@ function ProblemStatement() {
             <h2 className="section-heading">Web Development - Problem Statements</h2>
           </div>
 
-          {psData.map((ps, index) => (
-            <div className="problem-card" key={index}>
-              <div className="code-box">{ps.ps_id}</div>
+          {loading ? ( // ✅ show loading while fetching
+            <p className="loading-text">Loading problem statements...</p>
+          ) : psData.length === 0 ? (
+            <p className="loading-text">No problem statements found.</p>
+          ) : (
+            psData.map((ps, index) => (
+              <div className="problem-card" key={index}>
+                <div className="code-box">{ps.ps_id}</div>
+                <h3 className="title">{ps.ps_title}</h3>
 
-              <h3 className="title">{ps.ps_title}</h3>
+                <div className="text-section">
+                  <p>
+                    <strong style={{ fontSize: "15px", color: "white" }}>Objective:</strong>{" "}
+                    {ps.objective}
+                  </p>
+                  <p>
+                    <strong style={{ fontSize: "15px", color: "white" }}>Background:</strong>{" "}
+                    {ps.background}
+                  </p>
+                  {ps.expectedOutput && ps.expectedOutput.length > 0 && (
+                    <div>
+                      <strong style={{ fontSize: "15px", color: "white" }}>Expected Output:</strong>
+                      <ul style={{ marginTop: "8px", paddingLeft: "20px" }}>
+                        {ps.expectedOutput.map((item, idx) => (
+                          <li key={idx} style={{ marginBottom: "6px", color: "#ccc" }}>
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
 
-              <div className="text-section">
-              <p>
-                <strong style={{ fontSize: "15px", color: "white" }}>Objective:</strong>{" "}
-                {ps.objective}
-              </p>
-              <p>
-                <strong style={{ fontSize: "15px", color: "white" }}>Background:</strong>{" "}
-                {ps.background}
-              </p>
-              {ps.expectedOutput && ps.expectedOutput.length > 0 && (
-                <div>
-                  <strong style={{ fontSize: "15px", color: "white" }}>Expected Output:</strong>
-                  <ul style={{ marginTop: "8px", paddingLeft: "20px" }}>
-                    {ps.expectedOutput.map((item, idx) => (
-                      <li key={idx} style={{ marginBottom: "6px", color: "#ccc" }}>
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
+                <div className="top-row">
+                  <div className="industry-box">
+                    <img src={ps.industry_logo} alt="Industry Logo" className="industry-logo" />
+                    <p className="industry-text">{ps.industry_name}</p>
+                  </div>
+                  <div className="sdg-icons">
+                    <img src={ps.sdg1} alt="SDG Goal 1" />
+                    <img src={ps.sdg2} alt="SDG Goal 2" />
+                  </div>
                 </div>
-              )}
-            </div>
 
-              <div className="top-row">
-                <div className="industry-box">
-                  <img src={ps.industry_logo} alt="Industry Logo" className="industry-logo" />
-                  <p className="industry-text">{ps.industry_name}</p>
-                </div>
-                <div className="sdg-icons">
-                  <img src={ps.sdg1} alt="SDG Goal 1" />
-                  <img src={ps.sdg2} alt="SDG Goal 2" />
-                </div>
+                <button
+                  className="register-button"
+                  onClick={() =>
+                    navigate("/register", { state: { ps_id: ps.ps_id, ps_title: ps.ps_title } })
+                  }
+                >
+                  Register
+                </button>
               </div>
-
-               <button
-                className="register-button"
-                onClick={() => navigate("/register", { state: { ps_id: ps.ps_id , ps_title: ps.ps_title} })}
-              >
-                Register
-              </button>
-            </div>
-          ))}
+            ))
+          )}
         </main>
       </div>
 
@@ -228,6 +242,12 @@ function ProblemStatement() {
   .register-button:hover {
     background: rgb(98, 116, 255);
   }
+    .loading-text {
+          text-align: center;
+          font-size: 18px;
+          color: #ccc;
+          margin-top: 40px;
+      }
 
   @media (max-width: 768px) {
     .top-row {

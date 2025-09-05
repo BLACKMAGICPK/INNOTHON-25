@@ -2,19 +2,20 @@ import React, { useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import Header from "../Components/Header";
 import { useNavigate } from "react-router-dom";
-import BASE_URL from '../Configure';
+import BASE_URL from "../Configure";
 
 function ProblemStatement() {
   const navigate = useNavigate();
   const [psData, setPsData] = useState([]);
+  const [loading, setLoading] = useState(true); // ✅ loading state
 
   const handleBack = () => {
     navigate(-1);
   };
 
   useEffect(() => {
-      window.scrollTo(0, 0);
-    }, []);
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     fetch(`${BASE_URL}/get_CS_PS`, {
@@ -24,8 +25,14 @@ function ProblemStatement() {
       },
     })
       .then((res) => res.json())
-      .then((data) => setPsData(data)) // Expecting an array now
-      .catch((err) => console.error("Error fetching problem statements:", err));
+      .then((data) => {
+        setPsData(data);
+        setLoading(false); // ✅ stop loading when done
+      })
+      .catch((err) => {
+        console.error("Error fetching problem statements:", err);
+        setLoading(false);
+      });
   }, []);
 
   return (
@@ -35,59 +42,90 @@ function ProblemStatement() {
         <main className="problem-content">
           <div className="header-bar">
             <FaArrowLeft className="back-icon" onClick={handleBack} />
-            <h2 className="section-heading">Cyber Security - Problem Statements</h2>
+            <h2 className="section-heading">
+              Cyber Security - Problem Statements
+            </h2>
           </div>
 
-          {psData.map((ps, index) => (
-            <div className="problem-card" key={index}>
-              <div className="code-box">{ps.ps_id}</div>
+          {/* ✅ Handle loading / no data states */}
+          {loading ? (
+            <p style={{ textAlign: "center", fontSize: "18px", color: "#ccc" }}>
+              Loading problem statements...
+            </p>
+          ) : psData.length === 0 ? (
+            <p style={{ textAlign: "center", fontSize: "18px", color: "#ccc" }}>
+              No problem statements found.
+            </p>
+          ) : (
+            psData.map((ps, index) => (
+              <div className="problem-card" key={index}>
+                <div className="code-box">{ps.ps_id}</div>
 
-              <h3 className="title">{ps.ps_title}</h3>
+                <h3 className="title">{ps.ps_title}</h3>
 
-              <div className="text-section">
-              <p>
-                <strong style={{ fontSize: "15px", color: "white" }}>Objective:</strong>{" "}
-                {ps.objective}
-              </p>
-              <p>
-                <strong style={{ fontSize: "15px", color: "white" }}>Background:</strong>{" "}
-                {ps.background}
-              </p>
-              {ps.expectedOutput && ps.expectedOutput.length > 0 && (
-                <div>
-                  <strong style={{ fontSize: "15px", color: "white" }}>Expected Output:</strong>
-                  <ul style={{ marginTop: "8px", paddingLeft: "20px" }}>
-                    {ps.expectedOutput.map((item, idx) => (
-                      <li key={idx} style={{ marginBottom: "6px", color: "#ccc" }}>
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
+                <div className="text-section">
+                  <p>
+                    <strong style={{ fontSize: "15px", color: "white" }}>
+                      Objective:
+                    </strong>{" "}
+                    {ps.objective}
+                  </p>
+                  <p>
+                    <strong style={{ fontSize: "15px", color: "white" }}>
+                      Background:
+                    </strong>{" "}
+                    {ps.background}
+                  </p>
+                  {ps.expectedOutput && ps.expectedOutput.length > 0 && (
+                    <div>
+                      <strong style={{ fontSize: "15px", color: "white" }}>
+                        Expected Output:
+                      </strong>
+                      <ul style={{ marginTop: "8px", paddingLeft: "20px" }}>
+                        {ps.expectedOutput.map((item, idx) => (
+                          <li
+                            key={idx}
+                            style={{ marginBottom: "6px", color: "#ccc" }}
+                          >
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
 
-              <div className="top-row">
-                <div className="industry-box">
-                  <img src={ps.industry_logo} alt="Industry Logo" className="industry-logo" />
-                  <p className="industry-text">{ps.industry_name}</p>
+                <div className="top-row">
+                  <div className="industry-box">
+                    <img
+                      src={ps.industry_logo}
+                      alt="Industry Logo"
+                      className="industry-logo"
+                    />
+                    <p className="industry-text">{ps.industry_name}</p>
+                  </div>
+                  <div className="sdg-icons">
+                    <img src={ps.sdg1} alt="SDG Goal 1" />
+                    <img src={ps.sdg2} alt="SDG Goal 2" />
+                  </div>
                 </div>
-                <div className="sdg-icons">
-                  <img src={ps.sdg1} alt="SDG Goal 1" />
-                  <img src={ps.sdg2} alt="SDG Goal 2" />
-                </div>
+
+                <button
+                  className="register-button"
+                  onClick={() =>
+                    navigate("/register", {
+                      state: { ps_id: ps.ps_id, ps_title: ps.ps_title },
+                    })
+                  }
+                >
+                  Register
+                </button>
               </div>
-
-               <button
-                className="register-button"
-                onClick={() => navigate("/register", { state: { ps_id: ps.ps_id , ps_title: ps.ps_title} })}
-              >
-                Register
-              </button>
-            </div>
-          ))}
+            ))
+          )}
         </main>
       </div>
+         
 
       <style>{`
       body {

@@ -176,7 +176,7 @@ function Home() {
         <main className="home-content">
           <h2 className="tagline">&lt; A National Level Tech Hackathon /&gt;</h2>
           <img src={glitchLogo} alt="INNOTHON'25 Glitch Logo" className="glitch-logo" />
-          <h2 className="tagline" >&lt; Department Of Computer Science & engineering /&gt;</h2>
+          <h2 className="tagline" >&lt; Department Of Computer Science & Engineering /&gt;</h2>
 
           {/* INNOCOM Section */}
           <section className="section">
@@ -225,7 +225,7 @@ function Home() {
               <ul>
                 <li><FaRupeeSign className="note-icon" /><div>Enrollment Fee <span style={{color:"#ff9c00"}}> Rs.100/- </span> per Participant for initial Registeration and <span style={{color:"#ff9c00"}}> Rs.350/- </span> per Participant for Finals.</div></li>
                 <li><FaUsers className="note-icon" /><div>Team must consist of maximum 4 members only <span style={{color:"#ff9c00"}}> (1-4)</span> </div></li>
-                <li><FaClipboard className="note-icon" /><div>The pre-finals of this event will be conducted in the form of submitted PPTs and video screenings, after which the shortlisted students for the finals will be announced.</div></li>
+                <li><FaClipboard className="note-icon" /><div>The pre-finals of this event will be conducted in the form of submitted PPTs and video screenings, after which the shortlisted teams for the finals will be announced.</div></li>
                 <li><FaClock className="note-icon" /><div>30 hour hackathon.</div></li>
                 <li><FaClipboard className="note-icon" /><div>Participants are expected to develop a prototype for the chosen problem statement.</div></li>
               </ul>
@@ -249,7 +249,7 @@ function Home() {
             <div className="timeline-content">
               <h4 className="timeline-title">Registration Ends</h4>
               <p className="timeline-date">20th Sept 2025</p>
-              <p>Registeration Closes. </p>
+              <p>Registration Closes. </p>
             </div>
           </div>
           <div className="timeline-item">
@@ -257,7 +257,7 @@ function Home() {
             <div className="timeline-content">
               <h4 className="timeline-title">PPT Template Release</h4>
               <p className="timeline-date">8th Sept 2025 Onwards</p>
-              <p>PPT Template Release. <br />PPT Submission and 3-mins Vedio of proposed solution Submission starts.</p>
+              <p>PPT Template Release. <br />PPT Submission and 3-mins Video of proposed solution Submission starts.</p>
             </div>
           </div>
           <div className="timeline-item">
@@ -270,7 +270,7 @@ function Home() {
           </div>
 
           <div className="timeline-item">
-            <div className="timeline-icon timeline-icon-final" />
+            <div className="timeline-icon " />
             <div className="timeline-content">
               <h4 className="timeline-title">Grand Finale</h4>
               <p className="timeline-date">30th Sept - 1th Oct 2025</p>
