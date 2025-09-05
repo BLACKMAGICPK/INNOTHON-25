@@ -16,6 +16,7 @@ import Login from "./Screens/login";
 import Profile from "./Screens/Profile";
 import ForgotPassword from "./Screens/ForgotPassword";
 import ResetPassword from "./Screens/ResetPassword";
+import AdminPage from "./Screens/Admin"; // Import the AdminPage component
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -46,6 +47,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/admin" element={<AdminPage />} /> {/* Admin route */}
       </Routes>
     </Router>
   );
