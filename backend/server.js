@@ -576,7 +576,7 @@ app.post("/submit-help", async (req, res) => {
 
 
 // Get all registered users
-// Get all registered users (array directly for Excel)
+// Get all registered users (flattened for Excel)
 app.get("/registrations", async (req, res) => {
   try {
     const database = client.db("Registered_User");
@@ -585,8 +585,62 @@ app.get("/registrations", async (req, res) => {
     // Fetch all users
     const users = await collection.find({}).toArray();
 
-    // Return array directly
-    res.status(200).json(users);
+    // Flatten each user for Excel (one row per team)
+    const flattened = users.map(user => {
+      const {
+        _id,
+        userId,
+        ps_id,
+        ps_title,
+        teamName,
+        lead,
+        password,
+        state,
+        teamCount,
+        foodAllergy,
+        paymentScreenshot,
+        createdAt,
+        teamMembers
+      } = user;
+
+      // Base row with lead info
+      const row = {
+        _id,
+        userId,
+        ps_id,
+        ps_title,
+        teamName,
+        lead_name: lead.name,
+        lead_phone: lead.phone,
+        lead_email: lead.email,
+        lead_college: lead.college,
+        lead_department: lead.department,
+        lead_gender: lead.gender,
+        password,
+        state,
+        teamCount,
+        foodAllergy,
+        paymentScreenshot,
+        createdAt,
+      };
+
+      // Add team members as separate columns
+      if (Array.isArray(teamMembers)) {
+        teamMembers.forEach((member, i) => {
+          row[`member${i + 1}_name`] = member.name;
+          row[`member${i + 1}_phone`] = member.phone;
+          row[`member${i + 1}_email`] = member.email;
+          row[`member${i + 1}_department`] = member.department;
+        });
+      }
+
+      return row;
+    });
+
+    res.status(200).json({
+      message: "Registrations fetched successfully",
+      data: flattened,
+    });
   } catch (error) {
     console.error("❌ Error fetching registrations:", error);
     res.status(500).json({ message: "Internal server error" });
