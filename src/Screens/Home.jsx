@@ -281,7 +281,7 @@ function Home() {
         fontWeight: "bold",
         color: "#ff9c00",
         marginTop: "20px",
-        whiteSpace: "nowrap",
+        whiteSpace: "",
       }}
     >
       Keep it crisp, impactful, and within 3 minutes.
