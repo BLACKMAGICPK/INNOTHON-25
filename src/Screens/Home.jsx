@@ -9,7 +9,8 @@ import BASE_URL from "../Configure";
 
 
 // Import icons
-import { FaLightbulb, FaCheckCircle, FaLeaf, FaClipboardList, FaBrain, FaTasks, FaProjectDiagram } from "react-icons/fa";
+import { FaLightbulb, FaCheckCircle, FaLeaf, FaClipboardList, FaBrain, FaTasks, FaProjectDiagram , FaDownload} from "react-icons/fa";
+import {  FaStar, FaCogs, FaVideo } from "react-icons/fa";
 import { FaRupeeSign, FaUsers, FaClock, FaClipboard } from "react-icons/fa";
 import { FaPhoneAlt } from "react-icons/fa";
 
@@ -31,6 +32,8 @@ import winner15 from "../images/Innothon'24_winner/winner15.jpg";
 
 import kcgLogo from "../images/kcg-logo.jpeg";
 import cseLogo from "../images/cse-logo.jpg";
+
+import PPT_Template from "../template/PPT_Template.pptx";
 
 function Home() {
   const navigate = useNavigate();
@@ -206,19 +209,6 @@ function Home() {
 
           </section>
 
-          {/* Evaluation Criteria Section */}
-          <section className="section eval-section">
-            <h3 className="section-title">Evaluation Criteria</h3>
-            <div className="eval-criteria">
-              {criteria.map((item, index) => (
-                <div className="criteria-item" key={index}>
-                  <div className="icon">{item.icon}</div>
-                  <span>{item.name}</span>
-                </div>
-              ))}
-            </div>
-          </section>
-          
           <section className="section">
             <div className="footer-section">
               <h3 className="section-title" style={{textAlign: "center"}}>Note</h3>
@@ -231,6 +221,76 @@ function Home() {
               </ul>
             </div>
           </section>
+
+
+{/* Pitch Video Guidelines Section */}
+<section className="section ">
+  <h3 className="section-title">Pitch Video Guidelines (3 mins)</h3>
+  <div className="pitch-guidelines" style={{ textAlign: "left", maxWidth: "1000px", margin: "20px auto", fontWeight: "700", color: "#ccc" }}>
+    <p>Cover the following points briefly and clearly:</p>
+    
+    <ul style={{ lineHeight: "2.3", listStyleType: "none", paddingLeft: 0 }}>
+      <li>
+        <FaUsers style={{ color: "#ff9c00", marginRight: "8px" }} />
+        <strong>Team</strong>  Introduce your <span style={{color:"#ff9c00"}}>team name</span> and <span style={{color:"#ff9c00"}}>members</span> in one line.
+      </li>
+      <li>
+        <FaLightbulb style={{ color: "#ff9c00", marginRight: "8px" }} />
+        <strong>Proposed Solution</strong>  Explain your <span style={{color:"#ff9c00"}}>idea/solution</span> and how it works in a nutshell.
+      </li>
+      <li>
+        <FaStar style={{ color: "#ff9c00", marginRight: "8px" }} />
+        <strong>Competitive Advantage</strong> Highlight what makes your solution <span style={{color:"#ff9c00"}}>unique</span> or <span style={{color:"#ff9c00"}}>better</span> than existing ones.
+      </li>
+      <li>
+        <FaCogs style={{ color: "#ff9c00", marginRight: "8px" }} />
+        <strong>Prototype / POC</strong> 
+        <ul style={{ listStyleType: "none", paddingLeft: "24px", marginTop: "8px" }}>
+          <li>
+            <FaVideo style={{ color: "#ff9c00", marginRight: "6px" }} />
+            If you have a <span style={{color:"#ff9c00"}}>prototype</span>: show a quick demo or screenshots.
+          </li>
+          <li>
+            <FaVideo style={{ color: "#ff9c00", marginRight: "6px" }} />
+            If not: explain your <span style={{color:"#ff9c00"}}>Proof of Concept</span> (how it will work, initial validation).
+          </li>
+        </ul>
+      </li>
+    </ul>
+  <p>Keep it <span style={{color:"#ff9c00"}}>crisp</span>, <span style={{color:"#ff9c00"}}>impactful</span>, and within <span style={{color:"#ff9c00"}}>3 minutes</span>.</p>
+</div>
+
+<a
+  href={PPT_Template}
+  download="PPT-Template.pptx"
+  className="register-btn"
+  style={{
+    display: "inline-flex",
+    alignItems: "center",
+    textDecoration: "none",
+    padding: "15px 20px",
+    borderRadius: "10px",
+    background: "linear-gradient(to right, #007BFF, #04fdbfff)",
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: "18px",
+    fontFamily: "'Courier New', monospace",
+    cursor: "pointer",
+    transition: "background 0.1s ease",
+    marginTop:"20px",
+    
+  }}
+>
+  Download PPT Template
+  <FaDownload style={{ marginLeft: "8px" }} />
+</a>
+<p>Login using your registered email to submit your PPT and video.</p>
+
+
+</section>
+
+          
+          
 
       {/* Timeline Section */}
       <section className="section timeline-section">
@@ -469,8 +529,8 @@ function Home() {
           background: linear-gradient(to right, #007BFF, #04fdbfff); /* Gradient color */
         -webkit-background-clip: text; /* Clip the background to the text */
         -webkit-text-fill-color: transparent; /* Make the text color transparent */
-        margin-top: 10px;
-          margin-top: 10px;
+        margin-top: 30px;
+          
         }
 
         .section-text {

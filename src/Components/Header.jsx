@@ -5,6 +5,7 @@ import innocomLogo from "../images/innocom.jpg";
 import kcgLogo from "../images/kcg-logo-new.jpg";
 import cseLogo from "../images/cse-logo_2.jpg";
 import ietLogo from "../images/IET.png";
+import ietLogo2 from "../images/IET-2.png";
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -19,7 +20,9 @@ function Header() {
           <img src={kcgLogo} alt="KCG Logo" className="logo" />
           <img src={cseLogo} alt="CSE Logo" className="logo" />
           <img src={innocomLogo} alt="Innocom Logo" className="logo" />
-          <img src={ietLogo} alt="IET Logo" className="logo" />
+          {/* Conditional IET Logos */}
+          <img src={ietLogo2} alt="IET Logo Desktop" className="logo iet-desktop" />
+          <img src={ietLogo} alt="IET Logo Mobile" className="logo iet-mobile" />
         </div>
 
         {/* Desktop Navigation */}
@@ -193,6 +196,12 @@ function Header() {
           margin-top: 10px;
           text-align: center;
         }
+          .iet-desktop {
+        display: inline-block;
+      }
+      .iet-mobile {
+        display: none;
+      }
 
         @media (max-width: 768px) {
           .nav-links {
@@ -217,6 +226,12 @@ function Header() {
             margin-left: 0;
             padding: 8px 16px;
             justify-content: center;
+          }
+            .iet-desktop {
+            display: none;
+          }
+          .iet-mobile {
+            display: inline-block;
           }
 
           @keyframes fadeIn {

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Header from "../Components/Header";
 import BASE_URL from "../Configure";
-import { FaArrowLeft } from "react-icons/fa";
+import { FaArrowLeft , FaArrowRight} from "react-icons/fa";
 
 function Profile() {
   const location = useLocation();
@@ -110,10 +110,31 @@ function Profile() {
                 </>
               )}
 
+               <hr />
+     {/* Submit PPT & Video Button */}
+           <p className="note-warning">
+            ⚠️ Note: If the PPT and video have been submitted once, please do not submit them again.
+          </p>
+            <div className="register-btn-container">
+              <a
+                href="https://docs.google.com/forms/d/e/1FAIpQLScxwjNANvO7g64ce9QttCURmFGhhM2tqhYWbABbLOnMtcp2Rw/viewform?usp=header"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="register-btn"
+              >
+                Submit Your PPT & 3min Video <FaArrowRight className="register-icon" />
+              </a>
+            </div>
+
+
+             
+
+
           {/* ✅ Problem Statement Section */}
           {problemStatement && (
   <>
-    <hr />
+   
+
     <h4>Problem Statement</h4>
     <div className="problem-card">
       <div className="code-box">{problemStatement.ps_id}</div>
@@ -333,16 +354,53 @@ function Profile() {
           }
 
         .flex-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
-    margin-top: 20px;
-    }
+          display: flex;
+          flex-wrap: wrap;
+          gap: 30px;
+          margin-top: 20px;
+          }
 
-    .flex-item {
-    flex: 1 1 35%;
-    min-width: 300px;
-    }
+          .flex-item {
+          flex: 1 1 35%;
+          min-width: 300px;
+          }
+          .register-btn-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 30px;
+        margin-top:10px;
+      }
+
+      .register-btn {
+        padding: 13px 20px;
+        background: linear-gradient(to right, #007BFF, #04fdbfff);
+        border: none;
+        border-radius: 10px;
+        color: #f5f5f5;
+        font-weight: bold;
+        font-size: 18px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 10px; /* space between text and icon */
+        transition: transform 0.2s ease, background-color 0.3s ease;
+        font-family: 'Courier New', monospace;
+        text-decoration: none;
+      }
+
+      .register-btn:hover {
+        background-color: #28baba;
+        transform: scale(1.05);
+      }
+        .note-warning {
+          text-align: center;
+          font-size: 14px;
+         
+          font-weight: bold;
+          font-family: 'Courier New', monospace;
+        }
+
+
 
 
         @media (min-width: 900px) {
