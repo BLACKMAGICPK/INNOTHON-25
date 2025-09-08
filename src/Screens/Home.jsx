@@ -224,41 +224,71 @@ function Home() {
 
 
 {/* Pitch Video Guidelines Section */}
-<section className="section ">
-  <h3 className="section-title">Pitch Video Guidelines (3 mins)</h3>
-  <div className="pitch-guidelines" style={{ textAlign: "left", maxWidth: "1000px", margin: "20px auto", fontWeight: "700", color: "#ccc" }}>
-    <p>Cover the following points briefly and clearly:</p>
-    
-    <ul style={{ lineHeight: "2.3", listStyleType: "none", paddingLeft: 0 }}>
+<section className="section">
+  <div className="footer-section">
+    <h3 className="section-title" style={{ textAlign: "center" }}>
+      Pitch Video Guidelines (3 mins)
+    </h3>
+    <ul>
       <li>
-        <FaUsers style={{ color: "#ff9c00", marginRight: "8px" }} />
-        <strong>Team</strong>  Introduce your <span style={{color:"#ff9c00"}}>team name</span> and <span style={{color:"#ff9c00"}}>members</span> in one line.
+        <FaUsers className="note-icon" />
+        <div>
+          <strong>Team:</strong> Introduce your&nbsp;
+          <span style={{ color: "#ff9c00", whiteSpace: "nowrap" }}>team name</span>&nbsp;and&nbsp;
+          <span style={{ color: "#ff9c00", whiteSpace: "nowrap" }}>members</span> in one line.
+        </div>
       </li>
       <li>
-        <FaLightbulb style={{ color: "#ff9c00", marginRight: "8px" }} />
-        <strong>Proposed Solution</strong>  Explain your <span style={{color:"#ff9c00"}}>idea/solution</span> and how it works in a nutshell.
+        <FaLightbulb className="note-icon" />
+        <div>
+          <strong>Proposed Solution:</strong> Briefly explain your&nbsp;
+          <span style={{ color: "#ff9c00", whiteSpace: "nowrap" }}>idea/solution</span>&nbsp;and how it works.
+        </div>
       </li>
       <li>
-        <FaStar style={{ color: "#ff9c00", marginRight: "8px" }} />
-        <strong>Competitive Advantage</strong> Highlight what makes your solution <span style={{color:"#ff9c00"}}>unique</span> or <span style={{color:"#ff9c00"}}>better</span> than existing ones.
+        <FaStar className="note-icon" />
+        <div>
+          <strong>Competitive Advantage:</strong> What makes your solution&nbsp;
+          <span style={{ color: "#ff9c00", whiteSpace: "nowrap" }}>unique</span>&nbsp;or&nbsp;
+          <span style={{ color: "#ff9c00", whiteSpace: "nowrap" }}>better</span> than existing ones.
+        </div>
       </li>
       <li>
-        <FaCogs style={{ color: "#ff9c00", marginRight: "8px" }} />
-        <strong>Prototype / POC</strong> 
-        <ul style={{ listStyleType: "none", paddingLeft: "24px", marginTop: "8px" }}>
-          <li>
-            <FaVideo style={{ color: "#ff9c00", marginRight: "6px" }} />
-            If you have a <span style={{color:"#ff9c00"}}>prototype</span>: show a quick demo or screenshots.
-          </li>
-          <li>
-            <FaVideo style={{ color: "#ff9c00", marginRight: "6px" }} />
-            If not: explain your <span style={{color:"#ff9c00"}}>Proof of Concept</span> (how it will work, initial validation).
-          </li>
-        </ul>
+        <FaCogs className="note-icon" />
+<div>
+  <strong>Prototype / POC:</strong>
+  <ul style={{ listStyleType: "none", paddingLeft: "20px", marginTop: "10px" }}>
+    <li>
+      <FaVideo className="note-icon" />
+      <span style={{ whiteSpace: "" }}>
+        If you have a <span style={{ color: "#ff9c00" }}>prototype</span>, show a quick demo or screenshots.
+      </span>
+    </li>
+    <li>
+      <FaVideo className="note-icon" />
+      <span style={{ whiteSpace: "" }}>
+        If not, explain your <span style={{ color: "#ff9c00" }}>Proof of Concept</span> (how it will work, initial validation).
+      </span>
+    </li>
+  </ul>
+</div>
+
       </li>
     </ul>
-  <p>Keep it <span style={{color:"#ff9c00"}}>crisp</span>, <span style={{color:"#ff9c00"}}>impactful</span>, and within <span style={{color:"#ff9c00"}}>3 minutes</span>.</p>
-</div>
+    <p
+      style={{
+        textAlign: "center",
+        fontWeight: "bold",
+        color: "#ff9c00",
+        marginTop: "20px",
+        whiteSpace: "nowrap",
+      }}
+    >
+      Keep it crisp, impactful, and within 3 minutes.
+    </p>
+  </div>
+
+
 
 <a
   href={PPT_Template}
