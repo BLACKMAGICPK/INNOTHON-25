@@ -363,7 +363,7 @@ function Home() {
             <div className="timeline-icon " />
             <div className="timeline-content">
               <h4 className="timeline-title">Grand Finale</h4>
-              <p className="timeline-date">30th Sept - 1th Oct 2025</p>
+              <p className="timeline-date">29th Sept - 30th Sept 2025</p>
               <p>PPT Presentation and Business Model.<br />Prototype 100%.<br />Mode: Offline.</p>
             </div>
           </div>
