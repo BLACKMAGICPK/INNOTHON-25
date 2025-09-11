@@ -600,7 +600,8 @@ app.get("/registrations", async (req, res) => {
         foodAllergy,
         paymentScreenshot,
         createdAt,
-        teamMembers
+        teamMembers,
+        projectabstract, // ✅ make sure you destructure it
       } = user;
 
       // Base row with lead info
@@ -624,6 +625,11 @@ app.get("/registrations", async (req, res) => {
         createdAt,
       };
 
+      // ✅ Add projectabstract only for PS-OI
+      if (ps_id === "PS-OI") {
+        row.projectabstract = projectabstract || "";
+      }
+
       // Add team members as separate columns
       if (Array.isArray(teamMembers)) {
         teamMembers.forEach((member, i) => {
@@ -646,8 +652,6 @@ app.get("/registrations", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
-
-
 
 
 
