@@ -176,9 +176,10 @@ app.post("/register", async (req, res) => {
       member3Phone,
       member3Email,
       member3Dept,
-      ps_id,              // ✅ new
-      ps_title,           // ✅ new
-      projectabstract,    // ✅ new (only for PS-OI)
+      ps_id,
+      ps_title,
+      projectabstract,
+      oiTheme,   // ✅ included, but stored only if PS-OI
     } = data;
 
     // 🚨 Mandatory fields check
@@ -194,13 +195,12 @@ app.post("/register", async (req, res) => {
       !department ||
       !teamCount ||
       !paymentScreenshot ||
-      !ps_id ||       // ✅ ensure ps_id is mandatory
-      !ps_title       // ✅ ensure ps_title is mandatory
+      !ps_id ||
+      !ps_title
     ) {
       return res.status(400).json({ message: "All required fields must be filled" });
     }
 
-    // ✅ Validate password match
     if (password !== confirmPassword) {
       return res.status(400).json({ message: "Passwords do not match" });
     }
@@ -208,16 +208,13 @@ app.post("/register", async (req, res) => {
     const db = client.db("Registered_User");
     const collection = db.collection("user_details");
 
-    // ✅ Check duplicate email
     const existing = await collection.findOne({ "lead.email": leadEmail });
     if (existing) {
       return res.status(409).json({ message: "This email is already registered" });
     }
 
-    // ✅ Generate unique user ID
     const userId = await generateUserId();
 
-    // ✅ Collect team members dynamically
     const teamMembers = [];
     if (teamCount >= 2) {
       teamMembers.push({
@@ -244,7 +241,6 @@ app.post("/register", async (req, res) => {
       });
     }
 
-    // ✅ Final document to save
     const entry = {
       userId,
       ps_id,
@@ -258,7 +254,7 @@ app.post("/register", async (req, res) => {
         department,
         gender,
       },
-      password, // ⚠️ hash this in production
+      password, // ⚠️ hash in production
       state,
       teamCount,
       teamMembers,
@@ -267,9 +263,10 @@ app.post("/register", async (req, res) => {
       createdAt: new Date(),
     };
 
-    // ✅ Only add projectabstract for PS-OI
+    // ✅ Only for PS-OI
     if (ps_id === "PS-OI") {
       entry.projectabstract = projectabstract || "";
+      entry.oiTheme = oiTheme || "";
     }
 
     await collection.insertOne(entry);
@@ -280,6 +277,7 @@ app.post("/register", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
+
 
 
 
