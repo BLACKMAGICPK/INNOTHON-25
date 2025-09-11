@@ -17,6 +17,7 @@ import Profile from "./Screens/Profile";
 import ForgotPassword from "./Screens/ForgotPassword";
 import ResetPassword from "./Screens/ResetPassword";
 import AdminPage from "./Screens/Admin"; // Import the AdminPage component
+import OIRegisteration from "./Screens/OI-registeration";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -48,6 +49,7 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/admin" element={<AdminPage />} /> {/* Admin route */}
+        <Route path="/oi-Register" element={<OIRegisteration />} />
       </Routes>
     </Router>
   );

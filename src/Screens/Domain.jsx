@@ -9,7 +9,7 @@ import Header from "../Components/Header";
 // Import icons
 import {
   FaCode, FaBrain, FaCloud, FaLock, FaMobileAlt, FaVrCardboard, FaQuestionCircle,
-  FaTrophy, FaShieldAlt, FaAward, FaTools, FaCertificate, FaGift
+  FaTrophy, FaShieldAlt, FaAward, FaTools, FaCertificate, FaGift,FaLightbulb
 } from "react-icons/fa";
 
 function Domains() {
@@ -60,6 +60,12 @@ function Domains() {
     icon: <FaMobileAlt />,
     desc: "Create responsive web and mobile apps with cloud integration.",
     path: "/wd-ps",
+  },
+   {
+    name: "Open Innovation",
+    icon: <FaLightbulb />, // you can use FaGift or FaTools if you prefer
+    desc: "Bring your own innovative ideas beyond the listed domains.",
+    path: "/oi-Register",
   },
 ];
 
