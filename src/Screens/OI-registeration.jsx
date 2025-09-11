@@ -71,10 +71,12 @@ function RegisterOpenInnovation() {
       const finalData = {
         ...formData,
         ps_id: "PS-OI",
-        ps_title: title,   // use state instead of hardcoded string
+        ps_title: title,
         teamCount,
         paymentScreenshot: imageUrl,
+        projectabstract: formData.projectabstract || "",  // ✅ add this line
       };
+
 
 
       const response = await fetch(`${BASE_URL}/register`, {

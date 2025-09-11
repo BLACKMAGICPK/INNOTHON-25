@@ -176,8 +176,9 @@ app.post("/register", async (req, res) => {
       member3Phone,
       member3Email,
       member3Dept,
-      ps_id,       // ✅ new
-      ps_title,    // ✅ new
+      ps_id,              // ✅ new
+      ps_title,           // ✅ new
+      projectabstract,    // ✅ new (only for PS-OI)
     } = data;
 
     // 🚨 Mandatory fields check
@@ -246,8 +247,8 @@ app.post("/register", async (req, res) => {
     // ✅ Final document to save
     const entry = {
       userId,
-      ps_id,       // ✅ saved
-      ps_title,    // ✅ saved
+      ps_id,
+      ps_title,
       teamName,
       lead: {
         name: leadName,
@@ -266,6 +267,11 @@ app.post("/register", async (req, res) => {
       createdAt: new Date(),
     };
 
+    // ✅ Only add projectabstract for PS-OI
+    if (ps_id === "PS-OI") {
+      entry.projectabstract = projectabstract || "";
+    }
+
     await collection.insertOne(entry);
 
     res.status(201).json({ message: "Team registered successfully", userId });
@@ -274,6 +280,7 @@ app.post("/register", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
+
 
 
 
@@ -600,8 +607,7 @@ app.get("/registrations", async (req, res) => {
         foodAllergy,
         paymentScreenshot,
         createdAt,
-        teamMembers,
-        projectabstract, // ✅ make sure you destructure it
+        teamMembers
       } = user;
 
       // Base row with lead info
@@ -625,11 +631,6 @@ app.get("/registrations", async (req, res) => {
         createdAt,
       };
 
-      // ✅ Add projectabstract only for PS-OI
-      if (ps_id === "PS-OI") {
-        row.projectabstract = projectabstract || "";
-      }
-
       // Add team members as separate columns
       if (Array.isArray(teamMembers)) {
         teamMembers.forEach((member, i) => {
@@ -652,6 +653,8 @@ app.get("/registrations", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
+
+
 
 
 
