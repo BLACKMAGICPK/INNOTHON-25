@@ -54,7 +54,7 @@ function AdminPage() {
   };
 
   // 🔹 Count teams per PS ID category
-  const psCategories = ["PS-AI", "PS-AR", "PS-VR", "PS-WD", "PS-CS"];
+  const psCategories = ["PS-AI", "PS-AR", "PS-VR", "PS-WD", "PS-CS", "PS-OI"];
   const psCounts = psCategories.reduce((acc, ps) => {
     acc[ps] = teams.filter(team => team.ps_id.startsWith(ps)).length;
     return acc;

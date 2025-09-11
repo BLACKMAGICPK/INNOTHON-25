@@ -164,6 +164,16 @@ function RegisterOpenInnovation() {
                   style={{ color: "white" }}
                   required
                 />
+                <label>Abstract of Your Open Innovation:(max 50 words) </label>
+              <textarea
+                name="projectabstract"
+                value={formData.abstract || ""}
+                onChange={handleChange}
+                rows="5"
+                placeholder="Write your abstract here"
+                style={{ resize: "vertical", color: "white" }}
+                required
+              />
 
             {/* Open Innovation Theme Dropdown */}
             <p>Note: Your open innovation Idea must come under These Domains</p>
