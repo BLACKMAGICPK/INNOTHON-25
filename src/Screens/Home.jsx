@@ -30,7 +30,7 @@ import winner13 from "../images/Innothon'24_winner/winner13.jpg";
 import winner14 from "../images/Innothon'24_winner/winner14.jpg";
 import winner15 from "../images/Innothon'24_winner/winner15.jpg";
 
-import kcgLogo from "../images/kcg-logo.jpeg";
+import kcgLogo from "../images/kcg_logo.jpg";
 import cseLogo from "../images/cse-logo.jpg";
 
 import PPT_Template from "../template/PPT_Template.pptx";
