@@ -76,22 +76,22 @@ function Domains() {
   {
     name: "Overall Title Winner",
     icon: <FaTrophy />,
-    desc: "Awarded to the team with the most outstanding performance across all domains.",
+    desc: "50,000 Awarded to the team with the most outstanding performance across all domains.",
   },
   {
     name: "2nd Prize Winner",
     icon: <FaAward />,
-    desc: "Awarded to the team securing the second overall position.",
+    desc: "30,000 Awarded to the team securing the second overall position.",
   },
   {
     name: "3rd Prize Winner",
     icon: <FaAward />,
-    desc: "Awarded to the team securing the third overall position.",
+    desc: "10,000 Awarded to the team securing the third overall position.",
   },
   {
-    name: "Domain-Wise Title Winner",
+    name: "Special Jury Winner",
     icon: <FaShieldAlt />,
-    desc: "One winning team will be chosen from each project domain.",
+    desc: "2,000 One team will be chosen from each project domain.",
   },
 ];
 
