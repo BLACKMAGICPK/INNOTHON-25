@@ -227,7 +227,7 @@ function Home() {
 <section className="section">
   <div className="footer-section">
     <h3 className="section-title" style={{ textAlign: "center" }}>
-      Pitch Video Guidelines (3 mins)
+      Pitch Video Guidelines (Optional)
     </h3>
     <ul>
       <li>
