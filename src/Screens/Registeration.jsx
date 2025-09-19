@@ -4,6 +4,7 @@ import qrImage from "../images/UPI.jpg";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import BASE_URL from '../Configure';
+import { set } from "mongoose";
 
 const statesOfIndia = [
   "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh",
@@ -55,6 +56,13 @@ function Register() {
   const handleSubmit = async (e) => {
   e.preventDefault();
   setLoading(true);
+
+  // College validation (KCG internal registration not allowed)
+  if (formData.college && formData.college.toLowerCase().includes("kcg")) {
+    alert("Internal registration from KCG is not allowed.");
+    setLoading(false);
+    return;
+  }
 
   try {
     let imageUrl = "";
@@ -117,7 +125,11 @@ function Register() {
           <div className="header-bar">
             <FaArrowLeft className="back-icon" onClick={() => navigate(-1)} />
             <h2 className="form-title">Team Registration</h2>
+
           </div>
+            <p style={{ color: "#ff6666", textAlign: "center", marginTop: "5px", fontWeight: "bold", marginBottom: "20px" }}>
+              Note: Only for External Registration – Internal Students from KCG are not allowed to register
+            </p>
 
           <form className="register-form" onSubmit={handleSubmit}>
             <label>Team Name:</label>
