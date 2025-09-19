@@ -338,7 +338,7 @@ function Home() {
             <div className="timeline-icon" />
             <div className="timeline-content">
               <h4 className="timeline-title">Registration Ends</h4>
-              <p className="timeline-date">20th Sept 2025</p>
+              <p className="timeline-date">19th Sept 2025</p>
               <p>Registration Closes. </p>
             </div>
           </div>
@@ -363,7 +363,7 @@ function Home() {
             <div className="timeline-icon " />
             <div className="timeline-content">
               <h4 className="timeline-title">Grand Finale</h4>
-              <p className="timeline-date">29th Sept - 30th Sept 2025</p>
+              <p className="timeline-date">26th Sept - 27th Sept 2025</p>
               <p>PPT Presentation and Business Model.<br />Prototype 100%.<br />Mode: Offline.</p>
             </div>
           </div>
